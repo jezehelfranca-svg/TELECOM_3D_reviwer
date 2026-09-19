@@ -375,8 +375,22 @@ process.on('exit', (code) => {
   try { console.log('[TELECOM 3D REVIEWER] Process exited with code ' + code); } catch (_) {}
 });
 
-server.listen(PORT, () => {
-  console.log('[TELECOM 3D REVIEWER] Server running at http://localhost:' + PORT);
+let currentPort = Number(PORT);
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    currentPort += 1;
+    console.log(`[TELECOM 3D REVIEWER] Port ${currentPort - 1} in use, falling back to port ${currentPort}...`);
+    setTimeout(() => {
+      server.listen(currentPort);
+    }, 200);
+  } else {
+    try { console.error('[TELECOM 3D REVIEWER] Server error:', err?.message || err); } catch (_) {}
+  }
+});
+
+server.listen(currentPort, () => {
+  console.log('[TELECOM 3D REVIEWER] Server running at http://localhost:' + currentPort);
   console.log('[TELECOM 3D REVIEWER] Connected to Cactus-Needle sidecar at port ' + NEEDLE_SIDECAR_PORT);
 });
 
