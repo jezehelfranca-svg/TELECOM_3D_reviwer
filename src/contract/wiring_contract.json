@@ -1,0 +1,194 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Telecom MTO Canonical Wiring Contract",
+  "description": "Shared contract for 3D Viewer, Deterministic Routing Engine, Rule Validator, Needle Assistant, and Teams Copilot.",
+  "version": "1.0.0-experimental",
+  "definitions": {
+    "Coordinates3D": {
+      "type": "object",
+      "properties": {
+        "x": { "type": "number", "description": "X coordinate in plant space (meters)" },
+        "y": { "type": "number", "description": "Y coordinate in plant space (meters)" },
+        "z": { "type": "number", "description": "Z coordinate / Elevation in plant space (meters)" }
+      },
+      "required": ["x", "y", "z"],
+      "additionalProperties": false
+    },
+    "Device": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tag": { "type": "string" },
+        "system": { "type": "string", "enum": ["CCTV", "PAGA", "TELECOM", "SECURITY", "FIRE_ALARM", "POWER", "CONTROL"] },
+        "category": { "type": "string" },
+        "network_group": { "type": "string", "enum": ["A", "B", "SHARED", "NONE"] },
+        "room_id": { "type": "string" },
+        "location": { "$ref": "#/definitions/Coordinates3D" },
+        "cable_entry_elevation_m": { "type": "number" },
+        "mounting_elevation_m": { "type": "number" },
+        "allowed_cables": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "tag", "system", "location", "cable_entry_elevation_m"]
+    },
+    "Panel": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tag": { "type": "string" },
+        "system": { "type": "string" },
+        "type": { "type": "string", "enum": ["cabinet", "junction_box", "edge_switch", "mdf", "idf", "server_rack"] },
+        "location": { "$ref": "#/definitions/Coordinates3D" },
+        "base_elevation_m": { "type": "number", "default": 0.0 },
+        "top_elevation_m": { "type": "number", "default": 2.2 },
+        "cable_entry_mode": { "type": "string", "enum": ["TOP", "BOTTOM", "BOTH"], "default": "TOP" },
+        "max_ports": { "type": "integer" },
+        "used_ports": { "type": "integer" },
+        "supported_topologies": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "tag", "system", "type", "location"]
+    },
+    "Cable": {
+      "type": "object",
+      "properties": {
+        "cable_id": { "type": "string" },
+        "tag": { "type": "string" },
+        "system": { "type": "string" },
+        "cable_type": { "type": "string", "enum": ["CCTV_DATA", "PAGA_AUDIO", "PAGA_LOOP_RETURN", "POWER_LV", "CONTROL", "FO_SM", "FO_MM", "INSTRUMENTATION"] },
+        "source_id": { "type": "string" },
+        "source_tag": { "type": "string" },
+        "destination_id": { "type": "string" },
+        "destination_tag": { "type": "string" },
+        "topology": { "type": "string", "enum": ["CLASS_A_LOOP", "RADIAL", "STAR", "DAISY_CHAIN", "MULTIDROP", "REDUNDANT_RING"] },
+        "route_segment_ids": { "type": "array", "items": { "type": "string" } },
+        "waypoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "x": { "type": "number" },
+              "y": { "type": "number" },
+              "z": { "type": "number" },
+              "segment_id": { "type": "string" },
+              "containment_id": { "type": "string" },
+              "elevation_m": { "type": "number" },
+              "elevation_label": { "type": "string" }
+            },
+            "required": ["x", "y", "z"]
+          }
+        },
+        "measured_horizontal_length_m": { "type": "number" },
+        "vertical_allowance_length_m": { "type": "number" },
+        "total_length_m": { "type": "number" },
+        "voltage_class": { "type": "string", "enum": ["ELV", "LV", "HV", "SIGNAL", "OPTICAL"] },
+        "manual_route": { "type": "boolean", "default": true },
+        "status": { "type": "string", "enum": ["PROPOSED", "VALIDATED", "REJECTED", "COMMITTED"] }
+      },
+      "required": ["cable_id", "tag", "cable_type", "source_id", "destination_id", "topology", "status"]
+    },
+    "Containment": {
+      "type": "object",
+      "properties": {
+        "containment_id": { "type": "string" },
+        "tag": { "type": "string" },
+        "type": { "type": "string", "enum": ["ladder_tray", "perforated_tray", "solid_trunking", "conduit_rsgc", "conduit_pvc", "duct_bank", "trench"] },
+        "width_mm": { "type": "number" },
+        "height_mm": { "type": "number" },
+        "internal_bore_mm2": { "type": "number" },
+        "max_fill_percent": { "type": "number", "default": 40.0 },
+        "current_fill_percent": { "type": "number", "default": 0.0 },
+        "cables_contained": { "type": "array", "items": { "type": "string" } },
+        "allowed_systems": { "type": "array", "items": { "type": "string" } },
+        "network_group": { "type": "string", "enum": ["A", "B", "SHARED"] },
+        "elevation_m": { "type": "number" },
+        "outdoor": { "type": "boolean", "default": false },
+        "has_metal_divider": { "type": "boolean", "default": false }
+      },
+      "required": ["containment_id", "tag", "type", "allowed_systems"]
+    },
+    "RouteSegment": {
+      "type": "object",
+      "properties": {
+        "segment_id": { "type": "string" },
+        "tag": { "type": "string" },
+        "type": { "type": "string", "enum": ["corridor_containment", "branch_conduit", "vertical_riser", "vertical_drop", "wall_penetration_segment", "trench", "inferred_tie_in"] },
+        "start_point": { "$ref": "#/definitions/Coordinates3D" },
+        "end_point": { "$ref": "#/definitions/Coordinates3D" },
+        "length_m": { "type": "number" },
+        "elevation_m": { "type": "number" },
+        "elevation_label": { "type": "string" },
+        "allowed_systems": { "type": "array", "items": { "type": "string" } },
+        "wall_side": { "type": "string", "enum": ["north", "south", "east", "west", "center", "none"] },
+        "outdoor": { "type": "boolean" },
+        "containment_id": { "type": "string" },
+        "is_inferred_gap": { "type": "boolean", "default": false }
+      },
+      "required": ["segment_id", "type", "start_point", "end_point", "elevation_m", "allowed_systems"]
+    },
+    "ElevationTransition": {
+      "type": "object",
+      "properties": {
+        "transition_id": { "type": "string" },
+        "type": { "type": "string", "enum": ["vertical_riser", "vertical_drop", "stanchion_drop", "wall_riser"] },
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "start_elevation_m": { "type": "number" },
+        "end_elevation_m": { "type": "number" },
+        "delta_z_m": { "type": "number" },
+        "containment_id": { "type": "string" },
+        "approved": { "type": "boolean", "default": true }
+      },
+      "required": ["transition_id", "type", "x", "y", "start_elevation_m", "end_elevation_m", "delta_z_m"]
+    },
+    "WallPenetration": {
+      "type": "object",
+      "properties": {
+        "penetration_id": { "type": "string" },
+        "wall_id": { "type": "string" },
+        "wall_name": { "type": "string" },
+        "location": { "$ref": "#/definitions/Coordinates3D" },
+        "fire_rating_hours": { "type": "number" },
+        "sleeve_diameter_mm": { "type": "number" },
+        "approved_systems": { "type": "array", "items": { "type": "string" } },
+        "is_approved": { "type": "boolean" },
+        "drawing_ref": { "type": "string" }
+      },
+      "required": ["penetration_id", "wall_id", "location", "is_approved"]
+    },
+    "ValidationFinding": {
+      "type": "object",
+      "properties": {
+        "finding_id": { "type": "string" },
+        "rule_id": { "type": "string" },
+        "severity": { "type": "string", "enum": ["error", "warning", "info"] },
+        "message": { "type": "string" },
+        "affected_entities": { "type": "array", "items": { "type": "string" } },
+        "violation_type": { "type": "string" },
+        "location": { "$ref": "#/definitions/Coordinates3D" },
+        "recommendation": { "type": "string" }
+      },
+      "required": ["finding_id", "rule_id", "severity", "message", "violation_type"]
+    },
+    "ConfidenceAndEvidence": {
+      "type": "object",
+      "properties": {
+        "confidence_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "rationale": { "type": "string" },
+        "source_document": { "type": "string" },
+        "drawing_number": { "type": "string" },
+        "clause_reference": { "type": "string" },
+        "coordinate_bounds": {
+          "type": "object",
+          "properties": {
+            "x_min": { "type": "number" },
+            "x_max": { "type": "number" },
+            "y_min": { "type": "number" },
+            "y_max": { "type": "number" },
+            "z_min": { "type": "number" },
+            "z_max": { "type": "number" }
+          }
+        }
+      },
+      "required": ["confidence_score", "rationale"]
+    }
+  }
+}

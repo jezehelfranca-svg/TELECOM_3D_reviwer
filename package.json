@@ -1,0 +1,23 @@
+﻿{
+  "name": "telecom-3d-reviewer",
+  "version": "1.0.0-experimental",
+  "description": "Deterministic Graph Cable Routing, Formal Rule Validator & Needle Intent Assistant with 3D Preview",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/run_all_tests.js",
+    "start": "node src/copilot/server.js",
+    "demo": "node demo/run_sample_simulation.js"
+  },
+  "keywords": [
+    "telecom",
+    "paga",
+    "cctv",
+    "cable-routing",
+    "threejs",
+    "needle",
+    "engineering-validator",
+    "class-a-loop"
+  ],
+  "author": "AGSA Telecom Systems",
+  "license": "Apache-2.0"
+}
