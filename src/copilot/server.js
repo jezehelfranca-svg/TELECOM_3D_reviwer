@@ -330,6 +330,9 @@ server.on('clientError', (err, socket) => {
   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
 });
 
+process.stdout.on('error', (err) => { if (err.code === 'EPIPE') return; });
+process.stderr.on('error', (err) => { if (err.code === 'EPIPE') return; });
+
 process.on('uncaughtException', (err) => {
   console.error('[TELECOM 3D REVIEWER] Uncaught exception:', err.message);
 });
