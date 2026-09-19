@@ -10425,6 +10425,27 @@ function mtoOpen3DReview() {
 }
 
 // TELECOM_MTO_NEEDLE_3D_ROUTER_V1
+// A Needle route is committed as an ordinary linear takeoff, so it needs a linear ("path") material:
+// that is what drives the takeoff table, the cable schedule and the BOQ.
+function mtoNeedleResolvePathMaterial(cableTypeName) {
+    const pathMaterials = materials.filter(m => m && m.type === 'path');
+    if (!pathMaterials.length) {
+        throw new Error('Add a linear (cable) material to the project before committing a Needle route.');
+    }
+    const wanted = String(cableTypeName || '').toUpperCase().replace(/[_-]+/g, ' ').trim();
+    if (wanted) {
+        const normalize = value => String(value || '').toUpperCase().replace(/[_-]+/g, ' ').trim();
+        const exact = pathMaterials.find(m => normalize(m.name) === wanted);
+        if (exact) return exact;
+        const partial = pathMaterials.find(m => {
+            const name = normalize(m.name);
+            return name && (name.includes(wanted) || wanted.includes(name));
+        });
+        if (partial) return partial;
+    }
+    return pathMaterials[0];
+}
+
 function mtoOpenNeedle3DReview() {
     if (mto3DReviewDialog) { mto3DReviewDialog.focus(); return; }
     const dialog = document.createElement('dialog');
@@ -10449,56 +10470,93 @@ function mtoOpenNeedle3DReview() {
         if (event.source !== frame.contentWindow || !event.data) return;
         if (event.data.type === 'telecom-mto-3d-close') { dialog.close(); return; }
         if (event.data.type === 'telecom-mto-3d-apply-cable') {
+            let before = null;
             try {
                 const cableData = event.data.cable;
                 if (!cableData) throw new Error('No cable data provided.');
+                mto3DValidateContext(event.data);
 
-                const before = mto3DMutableState();
-                mto3DPushUndo(before);
+                // The viewer works in metres with Y pointing north; the drawing works in pixels with Y
+                // pointing down. Use the same inverse mapping as mto3DApplyDeviceEdit so an applied route
+                // lands where it was previewed.
+                const factor = mto3DCalibrationFactor();
+                const ppu = Number(calibration.pixelsPerUnit);
+                const base = calibration.basePoint || {};
+                const bx = Number.isFinite(Number(base.x)) ? Number(base.x) : 0;
+                const by = Number.isFinite(Number(base.y)) ? Number(base.y) : 0;
+                const page = Number(pageNum) || 1;
+                if (base.page !== undefined && Number(base.page) !== page) {
+                    throw new Error('The calibration base point belongs to another page.');
+                }
 
-                const ppu = Number(calibration?.pixelsPerUnit) > 0 ? Number(calibration.pixelsPerUnit) : 50;
-                const unit = String(calibration?.unit || 'm').toLowerCase();
-                const factors = { m: 1, mm: 0.001, cm: 0.01, ft: 0.3048, in: 0.0254 };
-                const factor = factors[unit] || 1.0;
-                const bx = Number(calibration?.basePoint?.x) || 0;
-                const by = Number(calibration?.basePoint?.y) || 0;
+                const waypoints = Array.isArray(cableData.waypoints) ? cableData.waypoints : [];
+                if (waypoints.length < 2) throw new Error('The proposed route needs at least two waypoints.');
+                const pts = waypoints.map((wp, index) => {
+                    const xM = mto3DNumber(wp.x, 'Waypoint ' + (index + 1) + ' X');
+                    const yM = mto3DNumber(wp.y, 'Waypoint ' + (index + 1) + ' Y');
+                    const zM = mto3DNumber(wp.z ?? 0, 'Waypoint ' + (index + 1) + ' elevation');
+                    if (Math.max(Math.abs(xM), Math.abs(yM), Math.abs(zM)) > 100000) {
+                        throw new Error('Waypoint ' + (index + 1) + ' is outside the editable sanity limit.');
+                    }
+                    return { x: bx + xM / factor * ppu, y: by - yM / factor * ppu, z: zM / factor };
+                });
 
-                const pts = (cableData.waypoints && cableData.waypoints.length > 0)
-                    ? cableData.waypoints.map(wp => ({
-                        x: ((Number(wp.x) || 0) / factor) * ppu + bx,
-                        y: ((Number(wp.y) || 0) / factor) * ppu + by,
-                        z: Number(wp.z ?? 4.5)
-                      }))
-                    : [];
+                const cableTypeName = String(cableData.cableType || cableData.cable_type || '').trim();
+                const material = mtoNeedleResolvePathMaterial(cableTypeName);
+                const fromTag = String(cableData.sourceTag || cableData.fromTag || '').trim() || 'SRC';
+                const toTag = String(cableData.targetTag || cableData.toTag || '').trim() || 'DST';
+                const lengthM = Number(cableData.total_length_m ?? cableData.length_m ?? cableData.length);
+                const storedElevation = Number(pts.at(-1)?.z);
 
-                const newId = 'takeoff-' + Date.now() + '-' + Math.floor(Math.random()*1000);
+                before = mto3DMutableState();
+                const newId = 'takeoff-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
                 const cableTakeoff = {
                     id: newId,
-                    type: 'cable',
-                    category: 'cables',
-                    cableType: cableData.cableType || 'CCTV_DATA',
-                    tag: cableData.tag || ('CBL-' + (cableData.sourceTag || 'SRC') + '-' + (cableData.targetTag || 'DST')),
-                    fromTag: cableData.sourceTag || cableData.fromTag || 'SRC',
-                    toTag: cableData.targetTag || cableData.toTag || 'DST',
-                    description: (cableData.cableType || 'Cable') + ' from ' + (cableData.sourceTag || 'SRC') + ' to ' + (cableData.targetTag || 'DST'),
+                    materialId: material.id,
+                    type: 'path',
                     points: pts,
-                    length: Number(cableData.length_m) || Number(cableData.total_length_m) || 0,
-                    page: Number(pageNum) || 1,
-                    source: 'Needle 3D Router',
-                    routeMode: '3d-needle-solver',
-                    verified: true
+                    page,
+                    physicalValue: Number.isFinite(lengthM) ? lengthM : 0,
+                    zone: activeZone
                 };
+                const metadata = createDefaultTakeoffMetadata('path', material, activeZone);
+                metadata.fromTag = fromTag;
+                metadata.toTag = toTag;
+                metadata.scheduleType = 'Cable Schedule';
+                metadata.cableType = cableTypeName || material.name || '';
+                metadata.service = metadata.service || cableTypeName || material.name || '';
+                metadata.routingMethod = 'Needle 3D Router (AI solver)';
+                metadata.routeAlignmentStatus = 'Solved in the 3D router.';
+                metadata.remarks = 'Needle 3D Router route from ' + fromTag + ' to ' + toTag + '.';
+                if (Number.isFinite(Number(cableData.measured_horizontal_length_m))) {
+                    metadata.routeHorizontalLength = Number(Number(cableData.measured_horizontal_length_m).toFixed(2));
+                }
+                if (Number.isFinite(Number(cableData.vertical_allowance_length_m))) {
+                    metadata.verticalDropRiseAllowance = Number(Number(cableData.vertical_allowance_length_m).toFixed(2));
+                }
+                if (Number.isFinite(storedElevation)) {
+                    metadata.elevation = storedElevation;
+                    metadata.elevationLabel = formatElevationLabel(storedElevation * factor);
+                    metadata.routeLayer = metadata.elevationLabel;
+                }
+                const proposedTag = String(cableData.tag || '').trim();
+                if (proposedTag) { metadata.tagName = proposedTag; metadata.originalTagName = proposedTag; }
+                cableTakeoff.metadata = normalizeTakeoffMetadata(cableTakeoff, material);
 
                 takeoffs.push(cableTakeoff);
+                if (typeof refreshManualCableMetrics === 'function') refreshManualCableMetrics(cableTakeoff);
                 mto3DRefresh('needle-3d-apply-cable');
+                mto3DPushUndo(before);
 
+                mto3DPostSnapshot(frame, 'telecom-mto-3d-edit-result', { selectedId: newId, selectedKind: 'cables', action: 'apply-cable' });
                 frame.contentWindow.postMessage({
                     type: 'telecom-mto-3d-cable-applied',
                     ok: true,
                     cableId: newId,
-                    cable: cableTakeoff
+                    tag: cableTakeoff.metadata.tagName
                 }, '*');
             } catch (err) {
+                if (before) mto3DRestoreState(before);
                 frame.contentWindow.postMessage({
                     type: 'telecom-mto-3d-cable-applied',
                     ok: false,
@@ -10515,7 +10573,7 @@ function mtoOpenNeedle3DReview() {
     close.addEventListener('click', () => dialog.close());
     frame.addEventListener('load', () => {
         setTimeout(() => mto3DPostSnapshot(frame, 'telecom-mto-3d-project', { editable: true }), 150);
-    });
+    }, { once: true });
     frame.src = 'Telecom_3D_Reviewer_App.html';
     dialog.showModal();
     close.focus();
