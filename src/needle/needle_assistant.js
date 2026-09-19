@@ -237,7 +237,7 @@ export class NeedleAssistant {
    * Tool 4: preview_route (Preview-Only Mode)
    * Calculates path and validates it. DOES NOT MODIFY PROJECT DATA!
    */
-  preview_route(intentOrPrompt) {
+  preview_route(intentOrPrompt, customEvidence = null) {
     let parsedIntent;
     let evidence;
 

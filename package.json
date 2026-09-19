@@ -1,10 +1,13 @@
 ﻿{
   "name": "telecom-3d-reviewer",
-  "version": "1.0.0-experimental",
-  "description": "Deterministic Graph Cable Routing, Formal Rule Validator & Needle Intent Assistant with 3D Preview",
+  "version": "1.1.0-experimental",
+  "description": "Deterministic Graph Cable Routing, Formal Rule Validator & Real Cactus-Needle Foundation Model Assistant with 3D Preview",
   "type": "module",
   "scripts": {
-    "test": "node tests/run_all_tests.js",
+    "test": "node tests/run_all_tests.js && python tests/test_real_needle.py",
+    "test:js": "node tests/run_all_tests.js",
+    "test:needle": "python tests/test_real_needle.py",
+    "needle:sidecar": "python src/needle/needle_service.py --serve --port 5005",
     "start": "node src/copilot/server.js",
     "demo": "node demo/run_sample_simulation.js"
   },
@@ -15,6 +18,7 @@
     "cable-routing",
     "threejs",
     "needle",
+    "cactus-needle",
     "engineering-validator",
     "class-a-loop"
   ],

@@ -50,8 +50,8 @@ export class TeamsCopilotAdapter {
     };
   }
 
-  actionPreviewRoute(promptOrIntent) {
-    const preview = this.assistant.preview_route(promptOrIntent);
+  actionPreviewRoute(promptOrIntent, customEvidence = null) {
+    const preview = this.assistant.preview_route(promptOrIntent, customEvidence);
     let eventId = null;
     if (this.auditLogger) {
       eventId = this.auditLogger.recordProposal({
