@@ -333,3 +333,8 @@ server.listen(PORT, () => {
   console.log(`[TELECOM 3D REVIEWER] Server running at http://localhost:${PORT}`);
   console.log(`[TELECOM 3D REVIEWER] Connected to Cactus-Needle sidecar at port ${NEEDLE_SIDECAR_PORT}`);
 });
+
+// Periodic heartbeat every 5 minutes to keep log stream active
+setInterval(() => {
+  console.log(`[TELECOM 3D REVIEWER] Heartbeat: server active at ${new Date().toISOString()}`);
+}, 5 * 60 * 1000).unref();
