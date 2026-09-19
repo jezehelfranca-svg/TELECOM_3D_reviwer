@@ -298,12 +298,35 @@ const server = http.createServer(async (req, res) => {
   res.end('Not Found');
 });
 
+server.on('error', (err) => {
+  console.error('[TELECOM 3D REVIEWER] Server error:', err.message);
+});
+
+server.on('clientError', (err, socket) => {
+  if (err.code === 'ECONNRESET' || !socket.writable) return;
+  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
+});
+
 process.on('uncaughtException', (err) => {
   console.error('[TELECOM 3D REVIEWER] Uncaught exception:', err.message);
 });
 
 process.on('unhandledRejection', (reason) => {
   console.error('[TELECOM 3D REVIEWER] Unhandled rejection:', reason);
+});
+
+process.on('SIGINT', () => {
+  console.log('[TELECOM 3D REVIEWER] Shutting down (SIGINT)');
+  server.close(() => process.exit(0));
+});
+
+process.on('SIGTERM', () => {
+  console.log('[TELECOM 3D REVIEWER] Shutting down (SIGTERM)');
+  server.close(() => process.exit(0));
+});
+
+process.on('exit', (code) => {
+  console.log(`[TELECOM 3D REVIEWER] Process exited with code ${code}`);
 });
 
 server.listen(PORT, () => {
