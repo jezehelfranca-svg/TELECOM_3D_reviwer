@@ -282,12 +282,28 @@ const server = http.createServer(async (req, res) => {
       '.svg': 'image/svg+xml'
     };
     res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
-    fs.createReadStream(filePath).pipe(res);
+    const stream = fs.createReadStream(filePath);
+    stream.on('error', (err) => {
+      if (!res.headersSent) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Internal Server Error');
+      }
+    });
+    res.on('close', () => stream.destroy());
+    stream.pipe(res);
     return;
   }
 
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Not Found');
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[TELECOM 3D REVIEWER] Uncaught exception:', err.message);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('[TELECOM 3D REVIEWER] Unhandled rejection:', reason);
 });
 
 server.listen(PORT, () => {
