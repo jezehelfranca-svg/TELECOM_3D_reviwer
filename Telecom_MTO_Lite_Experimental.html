@@ -2573,6 +2573,45 @@ When supported, include:
             box-shadow: var(--shadow-lg);
         }
 
+        /* Guided Cable Routing Floating HUD & Action Card */
+        .guided-route-banner {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            background: rgba(15, 23, 42, 0.94);
+            backdrop-filter: blur(14px);
+            border: 1.5px solid #06b6d4;
+            border-radius: 12px;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            color: #f8fafc;
+            box-shadow: 0 12px 30px -5px rgba(6, 182, 212, 0.35), 0 8px 12px -6px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            pointer-events: auto;
+            transition: var(--transition-smooth);
+        }
+        .guided-route-accept-card {
+            position: fixed;
+            z-index: 10000;
+            background: rgba(15, 23, 42, 0.96);
+            backdrop-filter: blur(16px);
+            border: 1.5px solid #10b981;
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 0.85rem;
+            color: #f8fafc;
+            box-shadow: 0 20px 35px -8px rgba(0, 0, 0, 0.85), 0 0 22px rgba(16, 185, 129, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 290px;
+            pointer-events: auto;
+        }
+
         /* Help Info Floating Banner */
         .help-banner {
             position: absolute;
@@ -5433,6 +5472,39 @@ When supported, include:
                 <span id="help-banner-text">Loading drawing workspace...</span>
             </div>
 
+            <!-- Guided Cable Routing Floating HUD & Acceptance Card -->
+            <div class="guided-route-banner" id="guided-route-banner" style="display: none;">
+                <i class="fa-solid fa-route" style="color: #06b6d4; font-size: 1.2rem;"></i>
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span style="font-weight: 700; color: #38bdf8; font-size: 0.85rem;" id="guided-route-banner-title">Guided Corridor Routing</span>
+                    <span style="font-size: 0.78rem; color: #cbd5e1;" id="guided-route-banner-desc">Click route corridors to guide cable path. [Right-Click] to Accept.</span>
+                </div>
+                <div style="background: rgba(30, 41, 59, 0.85); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 6px; padding: 4px 10px; font-size: 0.75rem; font-family: monospace; color: #38bdf8;" id="guided-route-banner-stats">
+                    Corridors: 0 | Length: 0.0 m
+                </div>
+                <button class="btn" id="btn-cancel-guided-link" style="padding: 5px 12px; font-size: 0.78rem; background: rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; cursor: pointer;">
+                    <i class="fa-solid fa-xmark"></i> Cancel (ESC)
+                </button>
+            </div>
+
+            <div class="guided-route-accept-card" id="guided-route-accept-card" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(148, 163, 184, 0.2); padding-bottom: 8px;">
+                    <span style="font-weight: 700; color: #10b981; font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-circle-check"></i> Accept Guided Route
+                    </span>
+                    <button id="btn-close-accept-card" style="background: transparent; border: none; color: #94a3b8; cursor: pointer; font-size: 1.1rem; line-height: 1;">&times;</button>
+                </div>
+                <div id="guided-route-accept-summary" style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.45; display: flex; flex-direction: column; gap: 4px;"></div>
+                <div style="display: flex; gap: 8px; margin-top: 4px;">
+                    <button class="btn btn-primary" id="btn-accept-guided-route" style="flex: 1.2; background: linear-gradient(135deg, #10b981, #059669); border: none; padding: 8px 12px; font-weight: 600; font-size: 0.85rem; justify-content: center; cursor: pointer;">
+                        <i class="fa-solid fa-check"></i> Accept Route
+                    </button>
+                    <button class="btn" id="btn-resume-guided-route" style="flex: 1; padding: 8px 10px; font-size: 0.8rem; justify-content: center; background: rgba(51, 65, 85, 0.6); color: #cbd5e1; cursor: pointer;">
+                        <i class="fa-solid fa-plus"></i> Add More
+                    </button>
+                </div>
+            </div>
+
         </main>
 
     </div>
@@ -7380,6 +7452,7 @@ When supported, include:
             setupTagFinder();
             setupRouteTrace(); // TELECOM_MTO_ROUTE_TRACE_GLOW_V1
             setupKeyboardEscListeners();
+            setupGuidedRouteEvents();
 
             // Initialize Layout States
             setSidebarCollapsed(localStorage.getItem(PROPERTIES_PANEL_COLLAPSED_KEY) === 'true');
@@ -17008,12 +17081,566 @@ EOF\`;
         // later; linked cables automatically re-shape along the containment while
         // staying attached to both devices, and containment fill updates.
         let pendingLinkSource = null;
+        // --- GUIDED POINT-TO-POINT DEVICE LINKING & CORRIDOR SELECTION ---
+        let pendingGuidedLink = null;
+        let hoveredCorridorId = null;
+
+        function projectPointToSegmentSubedges(point, segment) {
+            let best = null;
+            const pts = segment.points || [];
+            for (let i = 0; i < pts.length - 1; i++) {
+                const proj = projectPointOnSegment(point, pts[i], pts[i + 1]);
+                if (!best || proj.distance < best.distance) {
+                    best = { point: proj.point, distance: proj.distance, edgeIndex: i, t: proj.t, segment };
+                }
+            }
+            return best;
+        }
+
+        function walkCorridorBetweenProjections(segment, projA, projB) {
+            const pts = segment.points;
+            const result = [{ x: projA.point.x, y: projA.point.y }];
+            if (projA.edgeIndex === projB.edgeIndex) {
+                result.push({ x: projB.point.x, y: projB.point.y });
+                return result;
+            }
+            if (projA.edgeIndex < projB.edgeIndex) {
+                for (let i = projA.edgeIndex + 1; i <= projB.edgeIndex; i++) {
+                    result.push({ x: pts[i].x, y: pts[i].y });
+                }
+                result.push({ x: projB.point.x, y: projB.point.y });
+            } else {
+                for (let i = projA.edgeIndex; i > projB.edgeIndex; i--) {
+                    result.push({ x: pts[i].x, y: pts[i].y });
+                }
+                result.push({ x: projB.point.x, y: projB.point.y });
+            }
+            return result;
+        }
+
+        function findClosestPointsBetweenSegments(segA, segB) {
+            let best = null;
+            let minDist = Infinity;
+            const ptsA = segA.points || [];
+            const ptsB = segB.points || [];
+            ptsA.forEach(pA => {
+                const projB = projectPointToSegmentSubedges(pA, segB);
+                if (projB && projB.distance < minDist) {
+                    minDist = projB.distance;
+                    const projA = projectPointToSegmentSubedges(projB.point, segA);
+                    best = { projA, projB };
+                }
+            });
+            ptsB.forEach(pB => {
+                const projA = projectPointToSegmentSubedges(pB, segA);
+                if (projA && projA.distance < minDist) {
+                    minDist = projA.distance;
+                    const projB = projectPointToSegmentSubedges(projA.point, segB);
+                    best = { projA, projB };
+                }
+            });
+            return best;
+        }
+
+        function solveGuidedCorridorPath(fromPoint, toPoint, selectedSegmentIds, page) {
+            if (!selectedSegmentIds || !selectedSegmentIds.length) {
+                return {
+                    points: [{ x: fromPoint.x, y: fromPoint.y }, { x: toPoint.x, y: toPoint.y }],
+                    bindings: [],
+                    segmentsUsed: []
+                };
+            }
+
+            const segments = selectedSegmentIds.map(id => routeSegments.find(s => s.id === id)).filter(Boolean);
+            if (!segments.length) {
+                return {
+                    points: [{ x: fromPoint.x, y: fromPoint.y }, { x: toPoint.x, y: toPoint.y }],
+                    bindings: [],
+                    segmentsUsed: []
+                };
+            }
+
+            if (segments.length === 1) {
+                const seg = segments[0];
+                const pIn = projectPointToSegmentSubedges(fromPoint, seg);
+                const pOut = projectPointToSegmentSubedges(toPoint, seg);
+                if (!pIn || !pOut) {
+                    return {
+                        points: [{ x: fromPoint.x, y: fromPoint.y }, { x: toPoint.x, y: toPoint.y }],
+                        bindings: [],
+                        segmentsUsed: []
+                    };
+                }
+                const walk = walkCorridorBetweenProjections(seg, pIn, pOut);
+                const rawPoints = [fromPoint, ...walk, toPoint];
+                const points = [];
+                const bindings = [];
+                rawPoints.forEach((p, idx) => {
+                    if (!points.length || Math.hypot(p.x - points[points.length - 1].x, p.y - points[points.length - 1].y) > 0.01) {
+                        const ptIdx = points.length;
+                        points.push({ x: p.x, y: p.y });
+                        if (idx > 0 && idx < rawPoints.length - 1) {
+                            bindings.push({
+                                index: ptIdx,
+                                segmentId: seg.id,
+                                elevation: Number.isFinite(Number(seg.elevation)) ? Number(seg.elevation) : 0,
+                                elevationLabel: seg.elevationLabel || '',
+                                containmentTag: seg.containmentTag || '',
+                                routeClass: seg.routeClass || 'Shared',
+                                compatible: true
+                            });
+                        }
+                    }
+                });
+                return { points, bindings, segmentsUsed: [seg.id] };
+            }
+
+            // Sequential path across multiple corridors
+            const walks = [];
+            let curEntryProj = projectPointToSegmentSubedges(fromPoint, segments[0]);
+
+            for (let k = 0; k < segments.length; k++) {
+                const seg = segments[k];
+                let curExitProj;
+                if (k === segments.length - 1) {
+                    curExitProj = projectPointToSegmentSubedges(toPoint, seg);
+                } else {
+                    const nextSeg = segments[k + 1];
+                    const trans = findClosestPointsBetweenSegments(seg, nextSeg);
+                    curExitProj = trans ? trans.projA : projectPointToSegmentSubedges(seg.points[seg.points.length - 1], seg);
+                }
+
+                if (curEntryProj && curExitProj) {
+                    const walk = walkCorridorBetweenProjections(seg, curEntryProj, curExitProj);
+                    walks.push({ seg, walkPoints: walk });
+                }
+
+                if (k < segments.length - 1) {
+                    const nextSeg = segments[k + 1];
+                    const trans = findClosestPointsBetweenSegments(seg, nextSeg);
+                    curEntryProj = trans ? trans.projB : projectPointToSegmentSubedges(nextSeg.points[0], nextSeg);
+                }
+            }
+
+            const points = [{ x: fromPoint.x, y: fromPoint.y }];
+            const bindings = [];
+            const segmentsUsed = [];
+
+            walks.forEach(({ seg, walkPoints }) => {
+                if (!segmentsUsed.includes(seg.id)) segmentsUsed.push(seg.id);
+                walkPoints.forEach(p => {
+                    const prev = points[points.length - 1];
+                    if (Math.hypot(p.x - prev.x, p.y - prev.y) > 0.01) {
+                        const ptIdx = points.length;
+                        points.push({ x: p.x, y: p.y });
+                        bindings.push({
+                            index: ptIdx,
+                            segmentId: seg.id,
+                            elevation: Number.isFinite(Number(seg.elevation)) ? Number(seg.elevation) : 0,
+                            elevationLabel: seg.elevationLabel || '',
+                            containmentTag: seg.containmentTag || '',
+                            routeClass: seg.routeClass || 'Shared',
+                            compatible: true
+                        });
+                    }
+                });
+            });
+
+            const prev = points[points.length - 1];
+            if (Math.hypot(toPoint.x - prev.x, toPoint.y - prev.y) > 0.01) {
+                points.push({ x: toPoint.x, y: toPoint.y });
+            }
+
+            return { points, bindings, segmentsUsed };
+        }
+
+        function initGuidedLink(fromId, toId) {
+            const endpoints = getRouteEndpointCandidates();
+            const from = endpoints.find(candidate => candidate.id === fromId);
+            const to = endpoints.find(candidate => candidate.id === toId);
+            if (!from || !to) {
+                setRoutingStatus('Could not resolve the selected devices.', 'error');
+                return;
+            }
+            if (Number(from.page) !== Number(to.page)) {
+                setRoutingStatus('Both devices must be on the same drawing page.', 'error');
+                return;
+            }
+            const materialId = document.getElementById('route-material-select')?.value;
+            const material = materials.find(m => m.id === materialId);
+            if (!material || material.type !== 'path') {
+                setRoutingStatus('Select a linear Cable Material in the panel before linking devices.', 'error');
+                return;
+            }
+            hydrateRouteCableDiameterFromMaterial();
+
+            pendingGuidedLink = {
+                fromId,
+                toId,
+                fromPoint: { x: from.point.x, y: from.point.y },
+                toPoint: { x: to.point.x, y: to.point.y },
+                fromTag: from.tag,
+                toTag: to.tag,
+                page: from.page,
+                materialId: material.id,
+                selectedSegmentIds: [],
+                previewPoints: [{ x: from.point.x, y: from.point.y }, { x: to.point.x, y: to.point.y }],
+                previewBindings: [],
+                previewVerticalLength: 0,
+                previewHorizontalLength: Math.hypot(to.point.x - from.point.x, to.point.y - from.point.y),
+                previewVerticalAllowance: Math.max(0, Number(from.verticalDropRiseAllowance) || 0) + Math.max(0, Number(to.verticalDropRiseAllowance) || 0),
+                status: 'SELECTING',
+                hudCoords: null
+            };
+
+            updateGuidedLinkPreviewRoute();
+            showGuidedRouteHUD();
+            redrawFG();
+            setRoutingStatus('Selected ' + from.tag + ' \u2794 ' + to.tag + '. Click route corridors to guide cable, then [Right-Click] to Accept. ESC cancels.', 'ok');
+        }
+
+        function toggleGuidedLinkCorridor(segmentId) {
+            if (!pendingGuidedLink) return;
+            const idx = pendingGuidedLink.selectedSegmentIds.indexOf(segmentId);
+            if (idx >= 0) {
+                pendingGuidedLink.selectedSegmentIds.splice(idx, 1);
+            } else {
+                pendingGuidedLink.selectedSegmentIds.push(segmentId);
+            }
+            updateGuidedLinkPreviewRoute();
+            redrawFG();
+        }
+
+        function updateGuidedLinkPreviewRoute() {
+            if (!pendingGuidedLink) return;
+            const { fromPoint, toPoint, selectedSegmentIds, page, fromId, toId } = pendingGuidedLink;
+            const endpoints = getRouteEndpointCandidates();
+            const from = endpoints.find(c => c.id === fromId);
+            const to = endpoints.find(c => c.id === toId);
+
+            const solved = solveGuidedCorridorPath(fromPoint, toPoint, selectedSegmentIds, page);
+            pendingGuidedLink.previewPoints = solved.points;
+            pendingGuidedLink.previewBindings = solved.bindings;
+
+            const planPx = measureRoutePlanPixels(solved.points);
+            pendingGuidedLink.previewHorizontalLength = calibration.pixelsPerUnit
+                ? Number((planPx / calibration.pixelsPerUnit).toFixed(2))
+                : 0;
+
+            const dummyItem = {
+                page,
+                points: solved.points,
+                metadata: { waypointBindings: solved.bindings }
+            };
+            const vertical = computeManualVerticalLength(dummyItem, from, to);
+            pendingGuidedLink.previewVerticalLength = vertical ? Number(vertical.toFixed(2)) : 0;
+
+            const statsEl = document.getElementById('guided-route-banner-stats');
+            if (statsEl) {
+                const horizM = pendingGuidedLink.previewHorizontalLength;
+                const vertM = pendingGuidedLink.previewVerticalLength;
+                const totM = (horizM + vertM + (pendingGuidedLink.previewVerticalAllowance || 0)).toFixed(1);
+                statsEl.innerText = 'Corridors: ' + selectedSegmentIds.length + ' | Plan: ' + horizM + 'm | Vert: ' + vertM + 'm | Total: ' + totM + 'm';
+            }
+        }
+
+        function showGuidedRouteHUD() {
+            const banner = document.getElementById('guided-route-banner');
+            if (banner) {
+                banner.style.display = 'flex';
+                const desc = document.getElementById('guided-route-banner-desc');
+                if (desc && pendingGuidedLink) {
+                    desc.innerText = 'Linking ' + pendingGuidedLink.fromTag + ' \u2794 ' + pendingGuidedLink.toTag + '. Click corridors to pass through. [Right-Click] to Accept.';
+                }
+            }
+        }
+
+        function hideGuidedRouteHUD() {
+            const banner = document.getElementById('guided-route-banner');
+            if (banner) banner.style.display = 'none';
+            hideGuidedRouteAcceptCard();
+        }
+
+        function showGuidedRouteAcceptCard(clientX, clientY) {
+            const card = document.getElementById('guided-route-accept-card');
+            if (!card || !pendingGuidedLink) return;
+
+            const summaryEl = document.getElementById('guided-route-accept-summary');
+            if (summaryEl) {
+                const segCount = pendingGuidedLink.selectedSegmentIds.length;
+                const horizM = pendingGuidedLink.previewHorizontalLength;
+                const vertM = pendingGuidedLink.previewVerticalLength;
+                const allowM = pendingGuidedLink.previewVerticalAllowance || 0;
+                const totalM = (horizM + vertM + allowM).toFixed(2);
+                const unit = calibration.unit || 'm';
+
+                const corridorTags = pendingGuidedLink.selectedSegmentIds.map((id, idx) => {
+                    const s = routeSegments.find(seg => seg.id === id);
+                    const tag = s?.containmentTag || ('R' + String(idx + 1).padStart(2, '0'));
+                    const el = s?.elevationLabel || '';
+                    return '<span style="background: rgba(6, 182, 212, 0.2); border: 1px solid rgba(6, 182, 212, 0.4); border-radius: 4px; padding: 1px 6px; font-size: 0.72rem; color: #67e8f9;">' + tag + ' ' + el + '</span>';
+                }).join(' ');
+
+                summaryEl.innerHTML =
+                    '<div style="display: flex; justify-content: space-between;">' +
+                    '<span style="color: #94a3b8;">From:</span>' +
+                    '<strong style="color: #38bdf8;">' + pendingGuidedLink.fromTag + '</strong>' +
+                    '</div>' +
+                    '<div style="display: flex; justify-content: space-between;">' +
+                    '<span style="color: #94a3b8;">To:</span>' +
+                    '<strong style="color: #38bdf8;">' + pendingGuidedLink.toTag + '</strong>' +
+                    '</div>' +
+                    '<div style="display: flex; justify-content: space-between;">' +
+                    '<span style="color: #94a3b8;">Corridors:</span>' +
+                    '<span>' + (segCount > 0 ? segCount + ' selected' : '<em style="color:#f59e0b;">Direct line (none)</em>') + '</span>' +
+                    '</div>' +
+                    (segCount > 0 ? ('<div style="display: flex; gap: 4px; flex-wrap: wrap; margin: 2px 0;">' + corridorTags + '</div>') : '') +
+                    '<div style="border-top: 1px dashed rgba(148, 163, 184, 0.2); margin-top: 4px; padding-top: 4px; display: flex; justify-content: space-between; font-weight: 600;">' +
+                    '<span style="color: #94a3b8;">Total Length:</span>' +
+                    '<span style="color: #34d399;">' + totalM + ' ' + unit + '</span>' +
+                    '</div>';
+            }
+
+            card.style.display = 'flex';
+            const cardWidth = 300;
+            const cardHeight = 220;
+            const posX = Math.min(clientX + 10, window.innerWidth - cardWidth - 20);
+            const posY = Math.min(clientY + 10, window.innerHeight - cardHeight - 20);
+            card.style.left = Math.max(10, posX) + 'px';
+            card.style.top = Math.max(10, posY) + 'px';
+        }
+
+        function hideGuidedRouteAcceptCard() {
+            const card = document.getElementById('guided-route-accept-card');
+            if (card) card.style.display = 'none';
+        }
+
+        function commitGuidedLink() {
+            if (!pendingGuidedLink) return;
+            const { fromId, toId, previewPoints, previewBindings, selectedSegmentIds, previewVerticalLength, previewHorizontalLength, previewVerticalAllowance } = pendingGuidedLink;
+            const endpoints = getRouteEndpointCandidates();
+            const from = endpoints.find(c => c.id === fromId);
+            const to = endpoints.find(c => c.id === toId);
+            if (!from || !to) {
+                setRoutingStatus('Could not resolve endpoint devices.', 'error');
+                cancelGuidedLink();
+                return;
+            }
+            const materialId = document.getElementById('route-material-select')?.value;
+            const material = materials.find(m => m.id === materialId);
+            if (!material || material.type !== 'path') {
+                setRoutingStatus('Select a linear Cable Material in the panel before linking devices.', 'error');
+                return;
+            }
+            hydrateRouteCableDiameterFromMaterial();
+            const cableAreaInfo = getRouteCableAreaFromPanel(material);
+
+            const newTakeoff = {
+                id: 'takeoff-' + Date.now(),
+                materialId: material.id,
+                type: 'path',
+                points: previewPoints.map(p => ({ x: p.x, y: p.y })),
+                page: from.page,
+                physicalValue: 0,
+                zone: activeZone
+            };
+
+            const metadata = createDefaultTakeoffMetadata('path', material, activeZone);
+            metadata.linkedFromId = from.id;
+            metadata.linkedToId = to.id;
+            metadata.fromTag = from.tag;
+            metadata.toTag = to.tag;
+            metadata.scheduleType = 'Cable Schedule';
+            metadata.service = metadata.service || material.name || '';
+            metadata.cableType = material.name || '';
+            metadata.routingMethod = selectedSegmentIds.length ? 'Guided Link (P2P + Corridors)' : 'Direct Link (P2P)';
+            metadata.fromCableEntryElevation = from.cableEntryElevationLabel || '';
+            metadata.toCableEntryElevation = to.cableEntryElevationLabel || '';
+            metadata.fromHookupAllowance = Number.isFinite(from.hookupAllowance) ? from.hookupAllowance : '';
+            metadata.toHookupAllowance = Number.isFinite(to.hookupAllowance) ? to.hookupAllowance : '';
+            metadata.cableOuterDiameterMm = cableAreaInfo.cableOuterDiameterMm ? Number(cableAreaInfo.cableOuterDiameterMm.toFixed(2)) : '';
+            metadata.cableAreaMm2 = cableAreaInfo.cableAreaMm2 ? Number(cableAreaInfo.cableAreaMm2.toFixed(2)) : '';
+            metadata.remarks = selectedSegmentIds.length
+                ? ('Guided point-to-point link from ' + from.tag + ' to ' + to.tag + ' through ' + selectedSegmentIds.length + ' corridor(s).')
+                : ('Point-to-point direct link from ' + from.tag + ' to ' + to.tag + '.');
+
+            metadata.manualRoute = true;
+            metadata.waypointBindings = previewBindings;
+            metadata.routeSegmentIds = selectedSegmentIds.join(' | ');
+            metadata.routeAlignmentStatus = selectedSegmentIds.length
+                ? ('Guided along ' + selectedSegmentIds.length + ' corridor(s).')
+                : 'Direct run.';
+            metadata.routeUnrouted = '';
+            metadata.routeVerticalLength = previewVerticalLength ? Number(previewVerticalLength.toFixed(2)) : '';
+            metadata.routeHorizontalLength = previewHorizontalLength ? Number(previewHorizontalLength.toFixed(2)) : '';
+            metadata.verticalDropRiseAllowance = previewVerticalAllowance ? Number(previewVerticalAllowance.toFixed(2)) : '';
+
+            newTakeoff.metadata = metadata;
+            finalizeLinkedCableValues(newTakeoff, material, previewVerticalLength, previewVerticalAllowance);
+
+            takeoffs.push(newTakeoff);
+            mtoRecord('commit', 'devices-linked', {
+                id: newTakeoff.id,
+                materialId: newTakeoff.materialId,
+                from: from.tag,
+                to: to.tag,
+                points: mtoRoundPoints(newTakeoff.points)
+            });
+
+            pendingGuidedLink = null;
+            hoveredCorridorId = null;
+            hideGuidedRouteHUD();
+            renderMaterialsList();
+            renderTakeoffTable();
+            renderRoutingPlanPanel();
+            redrawFG();
+            setRoutingStatus('Cable from ' + from.tag + ' to ' + to.tag + ' accepted and committed (' + (newTakeoff.metadata.cableLength || 0) + ' ' + (calibration.unit || 'm') + ').', 'ok');
+        }
+
+        function cancelGuidedLink() {
+            pendingGuidedLink = null;
+            hoveredCorridorId = null;
+            hideGuidedRouteHUD();
+            redrawFG();
+            setRoutingStatus('Guided cable link cancelled.', 'warn');
+        }
+
+        function drawGuidedLinkPreview() {
+            if (!pendingGuidedLink) return;
+
+            // 1. Highlight selected corridors with cyan glow and sequence numbers
+            pendingGuidedLink.selectedSegmentIds.forEach((segId, idx) => {
+                const seg = routeSegments.find(s => s.id === segId);
+                if (!seg || !seg.points || seg.points.length < 2) return;
+                ctxFg.save();
+                ctxFg.strokeStyle = '#06b6d4';
+                ctxFg.lineWidth = 7;
+                ctxFg.shadowColor = '#06b6d4';
+                ctxFg.shadowBlur = 12;
+                ctxFg.globalAlpha = 0.75;
+                ctxFg.beginPath();
+                ctxFg.moveTo(seg.points[0].x, seg.points[0].y);
+                for (let i = 1; i < seg.points.length; i++) ctxFg.lineTo(seg.points[i].x, seg.points[i].y);
+                ctxFg.stroke();
+                ctxFg.restore();
+
+                const mid = getPathMidpoint(seg.points);
+                if (mid) {
+                    ctxFg.save();
+                    ctxFg.beginPath();
+                    ctxFg.arc(mid.x, mid.y, 11, 0, Math.PI * 2);
+                    ctxFg.fillStyle = '#06b6d4';
+                    ctxFg.fill();
+                    ctxFg.strokeStyle = '#ffffff';
+                    ctxFg.lineWidth = 1.5;
+                    ctxFg.stroke();
+                    ctxFg.fillStyle = '#ffffff';
+                    ctxFg.font = 'bold 11px Inter, sans-serif';
+                    ctxFg.textAlign = 'center';
+                    ctxFg.textBaseline = 'middle';
+                    ctxFg.fillText(String(idx + 1), mid.x, mid.y);
+                    ctxFg.restore();
+                }
+            });
+
+            // 2. Highlight hovered corridor if not selected
+            if (hoveredCorridorId && !pendingGuidedLink.selectedSegmentIds.includes(hoveredCorridorId)) {
+                const hSeg = routeSegments.find(s => s.id === hoveredCorridorId);
+                if (hSeg && hSeg.points && hSeg.points.length >= 2) {
+                    ctxFg.save();
+                    ctxFg.strokeStyle = '#38bdf8';
+                    ctxFg.lineWidth = 4;
+                    ctxFg.setLineDash([6, 4]);
+                    ctxFg.globalAlpha = 0.85;
+                    ctxFg.beginPath();
+                    ctxFg.moveTo(hSeg.points[0].x, hSeg.points[0].y);
+                    for (let i = 1; i < hSeg.points.length; i++) ctxFg.lineTo(hSeg.points[i].x, hSeg.points[i].y);
+                    ctxFg.stroke();
+                    ctxFg.restore();
+                }
+            }
+
+            // 3. Draw live rubber-band cable
+            const pts = pendingGuidedLink.previewPoints;
+            if (pts && pts.length >= 2) {
+                ctxFg.save();
+                ctxFg.strokeStyle = '#10b981';
+                ctxFg.lineWidth = 5;
+                ctxFg.shadowColor = '#10b981';
+                ctxFg.shadowBlur = 10;
+                ctxFg.globalAlpha = 0.45;
+                ctxFg.beginPath();
+                ctxFg.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) ctxFg.lineTo(pts[i].x, pts[i].y);
+                ctxFg.stroke();
+
+                ctxFg.strokeStyle = '#34d399';
+                ctxFg.lineWidth = 2.5;
+                ctxFg.setLineDash([8, 5]);
+                ctxFg.globalAlpha = 0.95;
+                ctxFg.beginPath();
+                ctxFg.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) ctxFg.lineTo(pts[i].x, pts[i].y);
+                ctxFg.stroke();
+
+                pts.forEach((p, idx) => {
+                    ctxFg.beginPath();
+                    ctxFg.arc(p.x, p.y, idx === 0 || idx === pts.length - 1 ? 6 : 4, 0, Math.PI * 2);
+                    ctxFg.fillStyle = idx === 0 ? '#22d3ee' : (idx === pts.length - 1 ? '#f59e0b' : '#ffffff');
+                    ctxFg.fill();
+                    ctxFg.strokeStyle = '#10b981';
+                    ctxFg.lineWidth = 1.5;
+                    ctxFg.stroke();
+                });
+                ctxFg.restore();
+            }
+        }
+
+        function setupGuidedRouteEvents() {
+            document.getElementById('btn-accept-guided-route')?.addEventListener('click', () => {
+                commitGuidedLink();
+            });
+            document.getElementById('btn-resume-guided-route')?.addEventListener('click', () => {
+                hideGuidedRouteAcceptCard();
+                if (pendingGuidedLink) {
+                    pendingGuidedLink.status = 'SELECTING';
+                    redrawFG();
+                }
+            });
+            document.getElementById('btn-cancel-guided-link')?.addEventListener('click', () => {
+                cancelGuidedLink();
+            });
+            document.getElementById('btn-close-accept-card')?.addEventListener('click', () => {
+                hideGuidedRouteAcceptCard();
+                if (pendingGuidedLink) {
+                    pendingGuidedLink.status = 'SELECTING';
+                    redrawFG();
+                }
+            });
+        }
+
 
         function isLinkedCable(item) {
             return Boolean(item && item.type === 'path' && item.metadata && item.metadata.linkedFromId && item.metadata.linkedToId);
         }
 
         function handleLinkCableClick(point) {
+            if (pendingGuidedLink) {
+                if (pendingGuidedLink.status === 'ACCEPT_READY') {
+                    hideGuidedRouteAcceptCard();
+                    pendingGuidedLink.status = 'SELECTING';
+                    redrawFG();
+                    return;
+                }
+                const corridorHit = findRouteSegmentAtPoint(point);
+                if (corridorHit) {
+                    toggleGuidedLinkCorridor(corridorHit.id);
+                    return;
+                }
+                setRoutingStatus('Click a route corridor to guide cable, or [Right-Click] to Accept.', 'ok');
+                return;
+            }
+
             const hit = findTakeoffAtPoint(point);
             if (!hit || hit.type !== 'point') {
                 setRoutingStatus('Click a placed device symbol (point takeoff) to link.', 'warn');
@@ -17022,7 +17649,7 @@ EOF\`;
             if (!pendingLinkSource) {
                 pendingLinkSource = hit.id;
                 const tag = ensureTakeoffMetadata(hit).tagName || hit.id;
-                setRoutingStatus(\`Link source: \${tag}. Now click the destination device.\`, 'ok');
+                setRoutingStatus('Link source: ' + tag + '. Now click the destination device.', 'ok');
                 redrawFG();
                 return;
             }
@@ -17032,7 +17659,7 @@ EOF\`;
             }
             const sourceId = pendingLinkSource;
             pendingLinkSource = null;
-            createDirectLink(sourceId, hit.id);
+            initGuidedLink(sourceId, hit.id);
         }
 
         function createDirectLink(fromId, toId) {
@@ -19366,6 +19993,15 @@ EOF\`;
                         finalCoords = getOrthoPoint(activeDrawingPath[activeDrawingPath.length - 1], rawMousePos);
                     }
                     tempMousePos = finalCoords;
+
+            if (pendingGuidedLink && pendingGuidedLink.status === 'SELECTING') {
+                const nearCorridor = findRouteSegmentAtPoint(coords);
+                const newHoverId = nearCorridor ? nearCorridor.id : null;
+                if (newHoverId !== hoveredCorridorId) {
+                    hoveredCorridorId = newHoverId;
+                    redrawFG();
+                }
+            }
                 }
             }
             redrawFG();
@@ -19710,7 +20346,10 @@ EOF\`;
         function setMode(mode) {
             mtoRecord('tool', 'set-mode', { mode: String(mode || ''), from: currentMode }); // TELECOM_MTO_SESSION_RECORDER_V1
             currentMode = mode;
-            if (mode !== 'linkCable') pendingLinkSource = null;
+            if (mode !== 'linkCable') {
+                pendingLinkSource = null;
+                cancelGuidedLink();
+            }
 
             const modeBtnIds = ['tool-pan', 'tool-select', 'tool-point', 'tool-path', 'tool-containment', 'tool-route', 'tool-route-node', 'tool-delete', 'tool-text', 'tool-cloud', 'tool-dimension', 'tool-wbs-zone'];
             modeBtnIds.forEach(id => {
@@ -20491,6 +21130,12 @@ EOF\`;
 
         canvasFg.addEventListener('contextmenu', (e) => {
             e.preventDefault();
+            if (pendingGuidedLink) {
+                pendingGuidedLink.status = 'ACCEPT_READY';
+                showGuidedRouteAcceptCard(e.clientX, e.clientY);
+                redrawFG();
+                return;
+            }
             // TELECOM_MTO_CABLE_WAYPOINTS_V1: in Select mode, right-clicking a linear run adds a waypoint
             // where it was clicked; right-clicking an existing waypoint removes it. Anywhere
             // else this still closes the path being drawn, exactly as before.
@@ -22395,6 +23040,11 @@ EOF\`;
             annotationLabelHitRegions = [];
 
             // Highlight the pending link source while picking the destination device
+            // Draw guided link transient preview and corridor highlights
+            if (pendingGuidedLink) {
+                drawGuidedLinkPreview();
+            }
+
             if (currentMode === 'linkCable' && pendingLinkSource) {
                 const linkSourceItem = takeoffs.find(t => t.id === pendingLinkSource);
                 const linkSourcePoint = linkSourceItem?.points?.[0];
@@ -23530,6 +24180,10 @@ EOF\`;
                 }
 
                 if (e.key === 'Escape') {
+                    if (pendingGuidedLink) {
+                        cancelGuidedLink();
+                        return;
+                    }
                     if (currentMode === 'linkCable' && pendingLinkSource) {
                         pendingLinkSource = null;
                         setRoutingStatus('Link cancelled. Click a device to start a new link, or ESC again to exit.', 'warn');
