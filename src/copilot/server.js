@@ -139,19 +139,26 @@ export async function resolveNeedleIntent(prompt) {
 // -----------------------------------------------------------------------------
 
 const server = http.createServer(async (req, res) => {
-  // CORS Headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  try {
+    // CORS Headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204);
-    res.end();
-    return;
-  }
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
 
-  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = parsedUrl.pathname;
+    let pathname = '/';
+    try {
+      const host = req.headers.host || `localhost:${PORT}`;
+      const parsedUrl = new URL(req.url || '/', `http://${host}`);
+      pathname = parsedUrl.pathname;
+    } catch {
+      pathname = '/';
+    }
 
   const sendJson = (statusCode, data) => {
     res.writeHead(statusCode, { 'Content-Type': 'application/json' });
@@ -272,6 +279,15 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (fs.existsSync(filePath)) {
+    try {
+      const stat = fs.statSync(filePath);
+      if (stat.isDirectory()) {
+        filePath = path.join(rootDir, 'index.html');
+      }
+    } catch {
+      filePath = path.join(rootDir, 'index.html');
+    }
+
     const ext = path.extname(filePath).toLowerCase();
     const mimeTypes = {
       '.html': 'text/html',
@@ -296,6 +312,13 @@ const server = http.createServer(async (req, res) => {
 
   res.writeHead(404, { 'Content-Type': 'text/plain' });
   res.end('Not Found');
+  } catch (outerErr) {
+    console.error('[TELECOM 3D REVIEWER] Request handler error:', outerErr.message);
+    if (!res.headersSent) {
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('Internal Server Error');
+    }
+  }
 });
 
 server.on('error', (err) => {
