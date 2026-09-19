@@ -330,41 +330,59 @@ server.on('clientError', (err, socket) => {
   socket.end('HTTP/1.1 400 Bad Request\r\n\r\n');
 });
 
+// Safe output streams and error containment
 process.stdout.on('error', (err) => { if (err.code === 'EPIPE') return; });
 process.stderr.on('error', (err) => { if (err.code === 'EPIPE') return; });
+if (process.stdin) {
+  try {
+    process.stdin.pause();
+    process.stdin.on('error', () => {});
+  } catch (_) {}
+}
+
+const rawLog = console.log;
+const rawError = console.error;
+console.log = (...args) => {
+  try { rawLog(...args); } catch (_) {}
+};
+console.error = (...args) => {
+  try { rawError(...args); } catch (_) {}
+};
 
 process.on('uncaughtException', (err) => {
-  console.error('[TELECOM 3D REVIEWER] Uncaught exception:', err.message);
+  try {
+    console.error('[TELECOM 3D REVIEWER] Uncaught exception:', err?.message || err);
+  } catch (_) {}
 });
 
 process.on('unhandledRejection', (reason) => {
-  console.error('[TELECOM 3D REVIEWER] Unhandled rejection:', reason);
+  try {
+    console.error('[TELECOM 3D REVIEWER] Unhandled rejection:', reason);
+  } catch (_) {}
 });
 
 process.on('SIGINT', () => {
-  console.log('[TELECOM 3D REVIEWER] Shutting down (SIGINT)');
+  try { console.log('[TELECOM 3D REVIEWER] Shutting down (SIGINT)'); } catch (_) {}
   server.close(() => process.exit(0));
 });
 
 process.on('SIGTERM', () => {
-  console.log('[TELECOM 3D REVIEWER] Shutting down (SIGTERM)');
+  try { console.log('[TELECOM 3D REVIEWER] Shutting down (SIGTERM)'); } catch (_) {}
   server.close(() => process.exit(0));
 });
 
 process.on('exit', (code) => {
-  console.log(`[TELECOM 3D REVIEWER] Process exited with code ${code}`);
+  try { console.log('[TELECOM 3D REVIEWER] Process exited with code ' + code); } catch (_) {}
 });
 
 server.listen(PORT, () => {
-  console.log(`[TELECOM 3D REVIEWER] Server running at http://localhost:${PORT}`);
-  console.log(`[TELECOM 3D REVIEWER] Connected to Cactus-Needle sidecar at port ${NEEDLE_SIDECAR_PORT}`);
+  console.log('[TELECOM 3D REVIEWER] Server running at http://localhost:' + PORT);
+  console.log('[TELECOM 3D REVIEWER] Connected to Cactus-Needle sidecar at port ' + NEEDLE_SIDECAR_PORT);
 });
 
-// Keep event loop active indefinitely
+// Keep event loop active indefinitely without leaking or throwing on broken pipes
 setInterval(() => {
-  console.log(`[TELECOM 3D REVIEWER] Heartbeat: server active at ${new Date().toISOString()}`);
+  try {
+    console.log('[TELECOM 3D REVIEWER] Heartbeat: server active at ' + new Date().toISOString());
+  } catch (_) {}
 }, 5 * 60 * 1000);
-
-if (process.stdin.isTTY === false) {
-  process.stdin.resume();
-}
