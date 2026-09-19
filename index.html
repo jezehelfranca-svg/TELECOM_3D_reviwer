@@ -277,7 +277,7 @@
 
   <header>
     <div class="brand-title">
-      <span>?? Telecom MTO 3D Reviewer</span>
+      <span>Telecom MTO 3D Reviewer</span>
       <span class="badge badge-exp">Experimental</span>
       <span class="badge badge-safe">Needle + Router + Validator</span>
     </div>
@@ -285,8 +285,8 @@
       <button id="btn-view-iso">Isometric</button>
       <button id="btn-view-top">Top Plan</button>
       <button id="btn-view-front">Front</button>
-      <button id="btn-audit-log">?? Audit Log</button>
-      <button id="btn-export-project">?? Export Project</button>
+      <button id="btn-audit-log">Audit Log</button>
+      <button id="btn-export-project">Export Project</button>
     </div>
   </header>
 
@@ -300,15 +300,15 @@
         <textarea id="prompt-input" class="prompt-box" placeholder="e.g. Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation"></textarea>
         
         <div class="preset-chips">
-          <div class="chip" data-prompt="Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation">?? CCTV-021 to Control Room (4.5m)</div>
-          <div class="chip" data-prompt="Route Class A PAGA audio loop from PAGA-CAB-A to SPK-104 at 4.0m elevation">?? PAGA Class A Loop (SPK-104)</div>
-          <div class="chip" data-prompt="Route cable from CCTV-021 at ground floor level through outdoor walkway">?? Invalid Ground Level (&lt;0.5m)</div>
-          <div class="chip" data-prompt="Route CCTV cable from CCTV-002 penetrating exterior wall directly to yard at Y=2.0">?? Illegal Wall Exit (No Sleeve)</div>
-          <div class="chip" data-prompt="Route power cable from PWR-VFD-01 sharing branch conduit CDT-PWR-01">? Power Segregation Check</div>
+          <div class="chip" data-prompt="Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation">CCTV-021 to Control Room (4.5m)</div>
+          <div class="chip" data-prompt="Route Class A PAGA audio loop from PAGA-CAB-A to SPK-104 at 4.0m elevation">PAGA Class A Loop (SPK-104)</div>
+          <div class="chip" data-prompt="Route cable from CCTV-021 at ground floor level through outdoor walkway">Invalid Ground Level (&lt;0.5m)</div>
+          <div class="chip" data-prompt="Route CCTV cable from CCTV-002 penetrating exterior wall directly to yard at Y=2.0">Illegal Wall Exit (No Sleeve)</div>
+          <div class="chip" data-prompt="Route power cable from PWR-VFD-01 sharing branch conduit CDT-PWR-01">Power Segregation Check</div>
         </div>
 
         <div style="margin-top: 10px; display: flex; gap: 8px;">
-          <button id="btn-preview-route" class="btn-primary" style="flex: 1;">? Preview Route (Needle + Solver)</button>
+          <button id="btn-preview-route" class="btn-primary" style="flex: 1;">Preview Route (Needle + Solver)</button>
         </div>
       </div>
 
@@ -342,8 +342,8 @@
       </div>
 
       <div class="gate-bar">
-        <button id="btn-apply-route" class="btn-apply" style="flex: 2;" disabled>? Apply Validated Route</button>
-        <button id="btn-reject-route" class="btn-reject" style="flex: 1;" disabled>? Discard</button>
+        <button id="btn-apply-route" class="btn-apply" style="flex: 2;" disabled>Apply Validated Route</button>
+        <button id="btn-reject-route" class="btn-reject" style="flex: 1;" disabled>Discard</button>
       </div>
     </div>
 
@@ -378,7 +378,7 @@
   <div id="audit-modal" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 style="font-size: 14px;">?? Audited Routing Events & Verification Trail</h3>
+        <h3 style="font-size: 14px;">Audited Routing Events & Verification Trail</h3>
         <button id="btn-close-audit">? Close</button>
       </div>
       <div class="modal-body" id="audit-modal-body"></div>
@@ -662,7 +662,7 @@
         for (const f of findings) {
           const item = document.createElement("div");
           item.className = "finding-item";
-          item.innerHTML = "<div class="finding-rule">" + f.rule_id + " [" + f.violation_type + "]</div><div class="finding-msg">" + f.message + "</div><div class="finding-rem">Recommendation: " + (f.recommendation || "Reroute through approved containment.") + "</div>";
+          item.innerHTML = `<div class="finding-rule">${f.rule_id} [${f.violation_type}]</div><div class="finding-msg">${f.message}</div><div class="finding-rem">Recommendation: ${f.recommendation || "Reroute through approved containment."}</div>`;
           valFindingsContainer.appendChild(item);
         }
 
@@ -709,7 +709,7 @@
       body.innerHTML = "";
 
       if (history.length === 0) {
-        body.innerHTML = "<p style="color: var(--text-muted);">No routing proposals recorded yet.</p>";
+        body.innerHTML = `<p style="color: var(--text-muted);">No routing proposals recorded yet.</p>`;
       } else {
         history.forEach(evt => {
           const div = document.createElement("div");
@@ -718,7 +718,16 @@
           div.style.padding = "10px";
           div.style.borderRadius = "6px";
           div.style.marginBottom = "10px";
-          div.innerHTML = "<div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><b>" + evt.event_id + "</b><span class="badge " + (evt.user_decision === "APPLIED" ? "badge-safe" : evt.user_decision === "REJECTED" ? "badge-danger" : "badge-warn") + "">" + evt.user_decision + "</span></div><div style="color: #38bdf8; margin-bottom: 4px;">"" + evt.request_prompt + ""</div><div style="color: var(--text-muted); font-size: 11px;">Timestamp: " + evt.timestamp + "</div>" + (evt.diff_summary ? "<div style="color: #34d399; font-size: 11px; margin-top: 4px;">Committed Cable: " + evt.diff_summary.cable_tag + " (" + evt.diff_summary.total_length_m + "m)</div>" : "");
+          const badgeClass = evt.user_decision === 'APPLIED' ? 'badge-safe' : evt.user_decision === 'REJECTED' ? 'badge-danger' : 'badge-warn';
+          div.innerHTML = `
+            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+              <b>${evt.event_id}</b>
+              <span class="badge ${badgeClass}">${evt.user_decision}</span>
+            </div>
+            <div style="color: #38bdf8; margin-bottom: 4px;">"${evt.request_prompt}"</div>
+            <div style="color: var(--text-muted); font-size: 11px;">Timestamp: ${evt.timestamp}</div>
+            ${evt.diff_summary ? `<div style="color: #34d399; font-size: 11px; margin-top: 4px;">Committed Cable: ${evt.diff_summary.cable_tag} (${evt.diff_summary.total_length_m}m)</div>` : ''}
+          `;
           body.appendChild(div);
         });
       }
