@@ -7765,10 +7765,13 @@ function projectModelHash(model = {}, contextToken = '') {
 
     // Listen for parent confirmation
     window.addEventListener('message', event => {
-      if (!event.data) return;
+      // Only the hosting MTO app may report a commit result.
+      if (event.source !== window.parent || window.parent === window || !event.data) return;
       if (event.data.type === 'telecom-mto-3d-cable-applied') {
         if (event.data.ok) {
-          logTranscript('agent', `✔ Cable ${event.data.cable?.tag || ''} successfully integrated into 2D drawing & BOQ!`);
+          // The app sends the tag and id at the top level, not nested under `cable`.
+          const label = event.data.tag || event.data.cableId || '';
+          logTranscript('agent', `✔ Cable ${label} successfully integrated into 2D drawing & BOQ!`);
         } else {
           logTranscript('finding', `Commit failed: ${event.data.error}`);
         }
