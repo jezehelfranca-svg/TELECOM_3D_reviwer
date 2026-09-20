@@ -318,9 +318,15 @@ export class DeterministicRouteSolver {
    * @param {Object} intent
    * @returns {Object} Canonical Cable object
    */
+  solveRoute(intent) {
+    return this.calculateRoute(intent);
+  }
+
   calculateRoute(intent) {
-    const source = this.findObject(intent.source);
-    const destination = this.findObject(intent.destination);
+    const srcId = intent.source || intent.source_id;
+    const dstId = intent.destination || intent.destination_id;
+    const source = this.findObject(srcId);
+    const destination = this.findObject(dstId);
 
     if (!source) throw new Error(`Source object '${intent.source}' could not be located in project.`);
     if (!destination) throw new Error(`Destination object '${intent.destination}' could not be located in project.`);

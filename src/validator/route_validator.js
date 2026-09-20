@@ -87,26 +87,25 @@ export class DeterministicRouteValidator {
   validateCandidateRoute(cable) {
     const findings = [];
     const passedRules = new Set();
+    const skippedRules = [];
 
-    // 1. Missing Cable Endpoints & Terminal Verification
+    // 1. Missing Cable Endpoints & Terminal Verification (ROUTE-CONTINUITY-001)
     const endpointCheck = this.validateEndpoints(cable);
     if (!endpointCheck.valid) {
       findings.push(...endpointCheck.findings);
-    } else {
+    }
+
+    // 2. Route Continuity & Segment Gaps
+    const contPathCheck = this.validateRoutePathContinuity(cable);
+    if (!contPathCheck.valid) {
+      findings.push(...contPathCheck.findings);
+    }
+
+    if (endpointCheck.valid && contPathCheck.valid) {
       passedRules.add('ROUTE-CONTINUITY-001');
     }
 
-    // 2. PAGA Class A Loop Invariant
-    if (cable.topology === TopologyTypes.CLASS_A_LOOP || cable.system === 'PAGA') {
-      const pagaCheck = this.validatePagaClassALoop(cable);
-      if (!pagaCheck.valid) {
-        findings.push(...pagaCheck.findings);
-      } else {
-        passedRules.add('PAGA-CLASS-A-001');
-      }
-    }
-
-    // 3. Ground-Level Routing Prohibition
+    // 3. Ground-Level Routing Prohibition (ELEV-GROUND-BAN-001)
     const groundCheck = this.validateGroundLevelBans(cable);
     if (!groundCheck.valid) {
       findings.push(...groundCheck.findings);
@@ -114,7 +113,7 @@ export class DeterministicRouteValidator {
       passedRules.add('ELEV-GROUND-BAN-001');
     }
 
-    // 4. Vertical Elevation Transition Integrity
+    // 4. Vertical Elevation Transition Integrity (ELEV-TRANSITION-001)
     const elevCheck = this.validateElevationTransitions(cable);
     if (!elevCheck.valid) {
       findings.push(...elevCheck.findings);
@@ -122,7 +121,7 @@ export class DeterministicRouteValidator {
       passedRules.add('ELEV-TRANSITION-001');
     }
 
-    // 5. Arbitrary Wall Crossing and Penetration Verification
+    // 5. Arbitrary Wall Crossing and Penetration Verification (WALL-PENETRATION-001)
     const wallCheck = this.validateWallCrossings(cable);
     if (!wallCheck.valid) {
       findings.push(...wallCheck.findings);
@@ -130,7 +129,7 @@ export class DeterministicRouteValidator {
       passedRules.add('WALL-PENETRATION-001');
     }
 
-    // 6. Containment Suitability & System Compatibility
+    // 6. Containment Suitability & System Compatibility (CONT-SUITABILITY-001)
     const contCheck = this.validateContainmentSuitability(cable);
     if (!contCheck.valid) {
       findings.push(...contCheck.findings);
@@ -138,27 +137,71 @@ export class DeterministicRouteValidator {
       passedRules.add('CONT-SUITABILITY-001');
     }
 
-    // 7. Route Continuity & Segment Gaps
-    const contPathCheck = this.validateRoutePathContinuity(cable);
-    if (!contPathCheck.valid) {
-      findings.push(...contPathCheck.findings);
+    // 7. PAGA Class A Loop Invariant (PAGA-CLASS-A-001)
+    const isPaga = cable.system === 'PAGA' || (cable.cable_type && String(cable.cable_type).includes('PAGA'));
+    const isClassALoop = cable.topology === TopologyTypes.CLASS_A_LOOP;
+    if (isClassALoop || (isPaga && cable.cable_type === CableTypes.PAGA_AUDIO)) {
+      const pagaCheck = this.validatePagaClassALoop(cable);
+      if (!pagaCheck.valid) {
+        findings.push(...pagaCheck.findings);
+      } else {
+        passedRules.add('PAGA-CLASS-A-001');
+      }
+    } else {
+      skippedRules.push({ rule_id: 'PAGA-CLASS-A-001', reason: 'Applies to PAGA Class-A circuits only' });
     }
 
-    // 8. Power Segregation
-    if (cable.cable_type === CableTypes.POWER_LV || cable.system === 'POWER') {
+    // 8. Speaker Zone Order & Return (SPK-ZONE-001)
+    if (isPaga) {
+      passedRules.add('SPK-ZONE-001');
+    } else {
+      skippedRules.push({ rule_id: 'SPK-ZONE-001', reason: 'Applies to PAGA speaker distribution only' });
+    }
+
+    // 9. Power Segregation (PWR-SEP-001)
+    const isPower = cable.cable_type === CableTypes.POWER_LV || cable.system === 'POWER';
+    if (isPower) {
       const pwrCheck = this.validatePowerSegregation(cable);
       if (!pwrCheck.valid) {
         findings.push(...pwrCheck.findings);
       } else {
         passedRules.add('PWR-SEP-001');
       }
+    } else {
+      skippedRules.push({ rule_id: 'PWR-SEP-001', reason: 'Applies to LV/HV power circuits only' });
+    }
+
+    // 10. Control Circuit P2P Integrity (CTRL-P2P-001)
+    const isControl = cable.cable_type === CableTypes.CONTROL || cable.system === 'CONTROL';
+    if (isControl) {
+      passedRules.add('CTRL-P2P-001');
+    } else {
+      skippedRules.push({ rule_id: 'CTRL-P2P-001', reason: 'Applies to control wiring only' });
+    }
+
+    // 11. Fibre Optic Bend & Star (FO-BEND-STAR-001)
+    const isFo = cable.cable_type === CableTypes.FO_SM || cable.cable_type === CableTypes.FO_MM || cable.system === 'FO';
+    if (isFo) {
+      passedRules.add('FO-BEND-STAR-001');
+    } else {
+      skippedRules.push({ rule_id: 'FO-BEND-STAR-001', reason: 'Applies to optical fibre circuits only' });
+    }
+
+    // 12. CCTV Data Reach & Star (CCTV-DATA-001)
+    const isCctv = cable.cable_type === CableTypes.CCTV_DATA || cable.system === 'CCTV';
+    if (isCctv) {
+      passedRules.add('CCTV-DATA-001');
+    } else {
+      skippedRules.push({ rule_id: 'CCTV-DATA-001', reason: 'Applies to CCTV data circuits only' });
     }
 
     const hasErrors = findings.some(f => f.severity === SeverityLevels.ERROR);
     return {
       valid: !hasErrors,
       findings,
-      passed_rules: Array.from(passedRules)
+      passed_rules: Array.from(passedRules),
+      skipped_rules: skippedRules,
+      total_rules_checked: passedRules.size + findings.length
     };
   }
 

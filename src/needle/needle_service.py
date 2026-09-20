@@ -1,10 +1,16 @@
-﻿import os
+import os
 import sys
 import json
 import re
 import argparse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import needle
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+try:
+    from src.needle.session_store import get_session_store
+except ImportError:
+    from session_store import get_session_store
 
 # -----------------------------------------------------------------------------
 # Tool Definitions (Constrained Needle Decorators)
@@ -208,19 +214,43 @@ def normalize_intent(raw_result: dict, query: str) -> dict:
         'topology': topology
     }
 
-def run_query(query_text: str) -> dict:
+def run_query(query_text: str, session_id: str = None) -> dict:
     agent = get_needle_agent()
-    raw = agent.run(query_text)
+    raw = agent.run(query_text, max_steps=1)
 
     results = raw.get('results', [])
     first_tool_result = results[0] if results else {}
 
     intent = normalize_intent(first_tool_result, query_text)
 
+    # Multi-turn session integration
+    session = None
+    if session_id:
+        store = get_session_store()
+        session = store.get_session(session_id)
+        if session:
+            store.add_message(session_id, 'user', query_text)
+
+    # Server-side execution of read-only tools if session model exists
+    server_tool_output = None
+    if session and session.get('project_model'):
+        model = session['project_model']
+        op = intent.get('operation')
+        if op == 'inspect_object':
+            tag = intent.get('device_tag', '')
+            found = [d for d in model.get('devices', []) if d.get('tag') == tag or d.get('id') == tag]
+            if found:
+                server_tool_output = found[0]
+        elif op == 'find_objects':
+            q = intent.get('query', '').lower()
+            matching = [d for d in model.get('devices', []) if q in d.get('tag', '').lower()]
+            server_tool_output = {'count': len(matching), 'items': matching[:10]}
+
     response = {
         'engine': 'cactus-needle',
         'version': needle.__version__,
         'query': query_text,
+        'session_id': session_id,
         'success': raw.get('success', True),
         'confidence': raw.get('confidence', 0.5),
         'prefill_tps': raw.get('prefill_tps', 0.0),
@@ -229,6 +259,7 @@ def run_query(query_text: str) -> dict:
         'reasoning': raw.get('reasoning', ''),
         'tool_calls': results,
         'intent': intent,
+        'server_tool_output': server_tool_output,
         'evidence': {
             'engine': f'Cactus-Needle {needle.__version__}',
             'confidence_score': raw.get('confidence', 0.5),
@@ -240,6 +271,10 @@ def run_query(query_text: str) -> dict:
             'drawing_number': 'DWG-TEL-001'
         }
     }
+
+    if session:
+        get_session_store().add_message(session_id, 'assistant', str(intent), meta=response)
+
     return response
 
 class NeedleHTTPHandler(BaseHTTPRequestHandler):
@@ -254,6 +289,22 @@ class NeedleHTTPHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        if self.path in ('/viewer', '/app.html'):
+            try:
+                base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+                app_path = os.path.join(base_dir, 'Telecom_3D_Reviewer_App.html')
+                with open(app_path, 'r', encoding='utf-8') as vf:
+                    content = vf.read()
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self._set_cors_headers()
+                self.end_headers()
+                self.wfile.write(content.encode('utf-8'))
+            except Exception as e:
+                self.send_response(500)
+                self.end_headers()
+            return
+
         if self.path == '/health':
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
@@ -271,15 +322,43 @@ class NeedleHTTPHandler(BaseHTTPRequestHandler):
             self.end_headers()
 
     def do_POST(self):
-        if self.path in ('/predict', '/api/needle/predict', '/run'):
-            content_length = int(self.headers.get('Content-Length', 0))
-            body_raw = self.rfile.read(content_length)
-            try:
-                body = json.loads(body_raw.decode('utf-8'))
-            except Exception:
-                body = {}
+        content_length = int(self.headers.get('Content-Length', 0))
+        body_raw = self.rfile.read(content_length)
+        try:
+            body = json.loads(body_raw.decode('utf-8'))
+        except Exception:
+            body = {}
 
+        if self.path in ('/session', '/api/needle/session'):
+            store = get_session_store()
+            project_model = body.get('project_model', {})
+            context_token = body.get('context_token', '')
+            session_id = store.create_session(project_model, context_token)
+
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self._set_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps({'session_id': session_id, 'status': 'ready'}).encode('utf-8'))
+            return
+
+        if self.path in ('/session/update', '/api/needle/session/update'):
+            store = get_session_store()
+            session_id = body.get('session_id', '')
+            project_model = body.get('project_model', {})
+            context_token = body.get('context_token', '')
+            ok = store.update_model(session_id, project_model, context_token)
+
+            self.send_response(200 if ok else 404)
+            self.send_header('Content-Type', 'application/json')
+            self._set_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps({'ok': ok}).encode('utf-8'))
+            return
+
+        if self.path in ('/predict', '/api/needle/predict', '/run', '/turn'):
             query = body.get('query') or body.get('prompt') or ''
+            session_id = body.get('session_id')
             if not query:
                 self.send_response(400)
                 self.send_header('Content-Type', 'application/json')
@@ -289,7 +368,7 @@ class NeedleHTTPHandler(BaseHTTPRequestHandler):
                 return
 
             try:
-                result = run_query(query)
+                result = run_query(query, session_id=session_id)
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
                 self._set_cors_headers()
@@ -301,42 +380,31 @@ class NeedleHTTPHandler(BaseHTTPRequestHandler):
                 self._set_cors_headers()
                 self.end_headers()
                 self.wfile.write(json.dumps({'error': str(e)}).encode('utf-8'))
-        else:
-            self.send_response(404)
-            self.end_headers()
+            return
 
-    def log_message(self, format, *args):
-        sys.stderr.write(f"[Needle-Sidecar] {format % args}\n")
+        self.send_response(404)
+        self.end_headers()
 
-def serve(port: int = 5005):
-    print(f"[Needle-Sidecar] Warming up Cactus-Needle foundation model...")
-    get_needle_agent()
-    print(f"[Needle-Sidecar] Model resident in memory. Starting HTTP server on port {port}...")
-    server = HTTPServer(('127.0.0.1', port), NeedleHTTPHandler)
-    print(f"[Needle-Sidecar] Ready to serve inference requests at http://127.0.0.1:{port}/predict")
+def run_server(port: int = 5005):
+    server_address = ('127.0.0.1', port)
+    httpd = HTTPServer(server_address, NeedleHTTPHandler)
+    print(f"Starting Needle HTTP Service on http://127.0.0.1:{port}...")
     try:
-        server.serve_forever()
+        httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n[Needle-Sidecar] Shutting down.")
-        server.server_close()
+        print("\nShutting down Needle service...")
+        httpd.server_close()
 
-def main():
-    parser = argparse.ArgumentParser(description='Cactus-Needle Telecom Tool Inference Engine')
-    parser.add_argument('query', nargs='?', default=None, help='Natural language routing prompt to run')
-    parser.add_argument('--serve', action='store_true', help='Start background HTTP sidecar service')
-    parser.add_argument('--port', type=int, default=5005, help='Port for HTTP sidecar (default: 5005)')
-
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Needle 3D Route Planning Service")
+    parser.add_argument('--serve', action='store_true', help="Run as HTTP background server")
+    parser.add_argument('--port', type=int, default=5005, help="HTTP server port")
+    parser.add_argument('--query', type=str, help="Run single inference CLI query")
     args = parser.parse_args()
 
     if args.serve:
-        serve(args.port)
+        run_server(args.port)
     elif args.query:
-        res = run_query(args.query)
-        print(json.dumps(res, indent=2))
+        print(json.dumps(run_query(args.query), indent=2))
     else:
-        test_q = 'Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation'
-        res = run_query(test_q)
-        print(json.dumps(res, indent=2))
-
-if __name__ == '__main__':
-    main()
+        parser.print_help()

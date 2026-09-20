@@ -56,7 +56,7 @@ export class NeedleIntentParser {
     
     // 3. Extract Source
     let source = '';
-    const srcMatch = text.match(/from\s+([A-Za-z0-9\-_]+)/i) || text.match(/source\s*[:=]\s*([A-Za-z0-9\-_]+)/i);
+    const srcMatch = text.match(/from\s+([A-Za-z0-9\-_]+)/i) || text.match(/source\s*[:=]\s*([A-Za-z0-9\-_]+)/i) || text.match(/(?:inspect|properties\s+for|find|locate|check)\s+(?:device\s+|equipment\s+)?([A-Za-z0-9\-_]+)/i);
     if (srcMatch) {
       source = srcMatch[1].toUpperCase();
     } else {
