@@ -3,6 +3,7 @@
 .DS_Store
 Thumbs.db
 build_ui.py
-
 __pycache__/
 *.pyc
+*.bak
+temp_code.mjs

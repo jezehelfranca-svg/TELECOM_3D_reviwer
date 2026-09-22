@@ -1,0 +1,253 @@
+/* Needle AI Assistant Styles */
+#needle-assistant-section {
+  background: #091322;
+  border: 1px solid #1e3a5f;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #f1f5f9;
+}
+.needle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.needle-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.needle-badge-local {
+  background: #0284c7;
+  color: #fff;
+}
+.needle-badge-fallback {
+  background: #d97706;
+  color: #fff;
+}
+.needle-badge-offline {
+  background: #64748b;
+  color: #fff;
+}
+.needle-chip {
+  font-size: 10px;
+  padding: 3px 8px;
+  background: #13243a;
+  color: #94a3b8;
+  border: 1px solid #243e63;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.needle-chip:hover {
+  background: #1e385c;
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+.quick-btn {
+  font-size: 11px;
+  padding: 4px 8px;
+  background: #0c4a6e;
+  color: #38bdf8;
+  border: 1px solid #0284c7;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.15s;
+}
+.quick-btn:hover {
+  background: #0284c7;
+  color: #fff;
+}
+#mto-needle-transcript {
+  max-height: 120px;
+  overflow-y: auto;
+  margin-top: 8px;
+  background: #040811;
+  border: 1px solid #142338;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+  display: none;
+}
+.transcript-msg {
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #0f1c2d;
+}
+.transcript-user {
+  color: #38bdf8;
+  font-weight: 600;
+}
+.transcript-tool {
+  color: #a78bfa;
+  font-family: monospace;
+  font-size: 10px;
+}
+.transcript-finding {
+  color: #f43f5e;
+  font-size: 10px;
+}
+.transcript-agent {
+  color: #cbd5e1;
+}
+
+
+/* Route Pathway Breadcrumbs & Glowing Circuit Inspector */
+.route-pathway-card {
+  background: #07101e;
+  border: 1px solid #1e3a5f;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+.route-pathway-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #142338;
+}
+.route-pathway-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.route-pathway-glow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00f5ff;
+  box-shadow: 0 0 8px #00f5ff;
+  animation: pulseGlow 1.5s infinite ease-in-out;
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1.0; transform: scale(1.2); }
+}
+.route-pathway-badge {
+  font-size: 10px;
+  color: #94a3b8;
+  background: #0f1c2d;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #1e3a5f;
+}
+.route-pathway-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.flow-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.flow-arrow {
+  color: #64748b;
+  font-size: 14px;
+  user-select: none;
+  margin: 0 2px;
+}
+.flow-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+.flow-group-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+.flow-chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.flow-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.chip-role {
+  font-size: 9px;
+  font-weight: 700;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+.chip-source {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+.chip-source:hover {
+  background: #22c55e;
+  color: #042f1e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
+}
+.chip-target {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid #f59e0b;
+  color: #fde047;
+}
+.chip-target:hover {
+  background: #f59e0b;
+  color: #451a03;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+}
+.chip-corridor {
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid #06b6d4;
+  color: #67e8f9;
+}
+.chip-corridor:hover {
+  background: #06b6d4;
+  color: #083344;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+}
+.chip-cable {
+  background: rgba(0, 245, 255, 0.15);
+  border: 1px solid #00f5ff;
+  color: #a5f3fc;
+}
+.chip-cable:hover {
+  background: #00f5ff;
+  color: #083344;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.6);
+}
+.chip-empty {
+  font-size: 11px;
+  font-style: italic;
+  color: #64748b;
+  padding: 4px 6px;
+  background: #091322;
+  border-radius: 4px;
+}

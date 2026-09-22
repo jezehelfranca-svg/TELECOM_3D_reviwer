@@ -1,0 +1,53 @@
+<section id="needle-assistant-section">
+  <div class="needle-header">
+    <h2 style="margin:0;font-size:13px;display:flex;align-items:center;gap:6px;color:#38bdf8;">
+      <span>⚡ Needle AI Assistant</span>
+    </h2>
+    <span id="mto-needle-badge" class="needle-badge needle-badge-fallback">Checking...</span>
+  </div>
+
+  <textarea id="mto-needle-prompt" style="width:100%;height:52px;background:#060e1a;border:1px solid #1e3a5f;border-radius:6px;color:#f1f5f9;font-size:11px;padding:6px;box-sizing:border-box;resize:vertical;" placeholder="e.g. Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation">Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation</textarea>
+  
+  <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;">
+    <button type="button" class="needle-chip" data-prompt="Route the CCTV cable from CCTV-021 to the control room through the outdoor corridor at 4.5 m elevation">CCTV (4.5m)</button>
+    <button type="button" class="needle-chip" data-prompt="Route Class A PAGA audio loop from PAGA-CAB-A to SPK-104 at 4.0m elevation">PAGA Class-A</button>
+    <button type="button" class="needle-chip" data-prompt="Route cable from CCTV-021 at ground floor level through outdoor walkway">Ground (&lt;0.5m)</button>
+    <button type="button" class="needle-chip" data-prompt="Inspect equipment properties for CCTV-021">Inspect CCTV</button>
+  </div>
+
+  <div style="margin-top:8px;">
+    <button type="button" id="btn-mto-needle-run" style="width:100%;background:#0284c7;color:#fff;border:none;border-radius:6px;padding:7px;font-size:11px;font-weight:700;cursor:pointer;">Run Needle Agent</button>
+  </div>
+
+  <!-- Multi-turn transcript pane -->
+  <div id="mto-needle-transcript"></div>
+
+  <!-- Structured Intent Card -->
+  <div id="mto-needle-intent-card" style="display:none;margin-top:8px;background:#050c17;border:1px solid #162e4c;border-radius:6px;padding:8px;font-size:11px;line-height:1.4;">
+    <div style="display:flex;justify-content:space-between;border-bottom:1px solid #16273e;padding-bottom:3px;margin-bottom:4px;">
+      <b style="color:#38bdf8;">Structured Intent</b>
+      <span id="mto-needle-conf" style="color:#10b981;font-weight:700;">--</span>
+    </div>
+    <div><span style="color:#94a3b8;">Operation:</span> <span id="mto-int-op">--</span></div>
+    <div><span style="color:#94a3b8;">Cable Type:</span> <span id="mto-int-cable">--</span></div>
+    <div><span style="color:#94a3b8;">Source:</span> <span id="mto-int-src">--</span> &nbsp;|&nbsp; <span style="color:#94a3b8;">Dst:</span> <span id="mto-int-dst">--</span></div>
+    <div><span style="color:#94a3b8;">Target Elev:</span> <span id="mto-int-elev">--</span> &nbsp;|&nbsp; <span style="color:#94a3b8;">Topol:</span> <span id="mto-int-top">--</span></div>
+    
+    <!-- Honest Telemetry Box -->
+    <div id="mto-needle-telemetry-box" style="margin-top:6px;padding-top:4px;border-top:1px dashed #1e3a5f;font-size:10px;color:#64748b;">
+      Tier: <span id="mto-tel-tier" style="color:#38bdf8;">--</span> &nbsp;|&nbsp; Latency: <span id="mto-tel-latency" style="color:#94a3b8;">--</span><br>
+      Solver: <span id="mto-tel-solver" style="color:#94a3b8;">Deterministic Graph</span> &nbsp;|&nbsp; Rules: <span id="mto-tel-rules" style="color:#94a3b8;">11 Formal</span><br>
+      Reasoning: <span id="mto-tel-reason" style="color:#cbd5e1;">--</span>
+    </div>
+  </div>
+
+  <!-- Engineering Rule Validation Box -->
+  <div id="mto-needle-val-box" style="display:none;margin-top:8px;border-radius:6px;padding:8px;font-size:11px;line-height:1.4;">
+    <div id="mto-val-badge" style="font-weight:700;margin-bottom:4px;"></div>
+    <div id="mto-val-msg" style="font-size:11px;"></div>
+    <div style="display:flex;gap:6px;margin-top:8px;">
+      <button type="button" id="btn-mto-needle-apply" style="flex:2;background:#059669;color:#fff;border:none;border-radius:6px;padding:6px;font-weight:700;cursor:pointer;display:none;">Apply Validated Route</button>
+      <button type="button" id="btn-mto-needle-discard" style="flex:1;background:#e11d48;color:#fff;border:none;border-radius:6px;padding:6px;cursor:pointer;display:none;">Discard</button>
+    </div>
+  </div>
+</section>
