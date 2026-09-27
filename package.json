@@ -4,8 +4,8 @@
   "description": "Deterministic Graph Cable Routing, Formal Rule Validator & Real Cactus-Needle Foundation Model Assistant with 3D Preview",
   "type": "module",
   "scripts": {
-    "test": "node tests/run_all_tests.js && node tests/test_adapter.js && node tests/test_engine_bundle.js && node tests/test_commit_invariant.js && python tests/test_real_needle.py",
-    "test:js": "node tests/run_all_tests.js && node tests/test_adapter.js && node tests/test_engine_bundle.js && node tests/test_commit_invariant.js",
+    "test": "node tests/run_all_tests.js && node tests/test_adapter.js && node tests/test_engine_bundle.js && node tests/test_commit_invariant.js && node tests/test_route_graph_import.js && python tests/test_real_needle.py",
+    "test:js": "node tests/run_all_tests.js && node tests/test_adapter.js && node tests/test_engine_bundle.js && node tests/test_commit_invariant.js && node tests/test_route_graph_import.js",
     "test:needle": "python tests/test_real_needle.py",
     "needle:sidecar": "python src/needle/needle_service.py --serve --port 5005",
     "start": "node src/copilot/server.js",

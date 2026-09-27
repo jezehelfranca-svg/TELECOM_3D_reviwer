@@ -102,6 +102,14 @@ This repository contains the experimental implementation of the **Hybrid Needle 
   `Needle proposal ? validator ? 3D preview ? user Apply ? saved edit`
 - Proposals cannot bypass the user confirmation gate.
 
+### Opening a Telecom MTO route graph export (`route-graph-page-<N>.json`)
+**Open project JSON** also accepts the file written by **Export graph JSON** in Telecom MTO's 3D Review.
+- **How it's rebuilt:** every graph node, edge, building and circuit carries its original source record, so [`src/viewer/route_graph_import.cjs`](src/viewer/route_graph_import.cjs) rebuilds a **read-only** session from those records, in the drawing's own calibration. A registered, rotated frame is re-projected to metres instead.
+- **Graph-only geometry:** snapped connections and riser/drop transitions are added as containment with the service `Graph: …`. Zero-length joins are skipped.
+- **Route graph panel:** lists the graph's findings, grouped by severity, and its circuits. Clicking one selects the object on the model.
+- **Unchanged:** project sessions load exactly as before.
+- **Tests:** `tests/test_route_graph_import.js`.
+
 ### Stage 6: Automated Test Suite (`tests/`)
 - **Test Runner:** [`tests/run_all_tests.js`](file:///d:/Projects/AGSA/TELECOM_3D_reviwer/tests/run_all_tests.js)
 - **34 automated assertions across 10 scenarios:**
