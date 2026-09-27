@@ -15,6 +15,8 @@ const inspectorButtons = fs.readFileSync(path.join(root, 'src/needle/browser/ins
 const engineBundle = fs.readFileSync(path.join(root, 'build/engine.bundle.js'), 'utf8');
 const viewerBridge = fs.readFileSync(path.join(root, 'src/needle/browser/viewer_bridge.js'), 'utf8');
 const needleClient = fs.readFileSync(path.join(root, 'src/needle/browser/needle_client.js'), 'utf8');
+const routeGraphImport = fs.readFileSync(path.join(root, 'src/viewer/route_graph_import.cjs'), 'utf8');
+const routeGraphLoader = fs.readFileSync(path.join(root, 'src/viewer/route_graph_loader.js'), 'utf8');
 
 // Combine logic
 const combinedLogic = `
@@ -32,6 +34,12 @@ ${viewerBridge}
 // NEEDLE CLIENT (In-App Agent Loop, Real Tool Calling & Commit Gate)
 // =============================================================================
 ${needleClient}
+
+// =============================================================================
+// ROUTE GRAPH IMPORT (opens Telecom MTO "Export graph JSON" files, read-only)
+// =============================================================================
+${routeGraphImport}
+${routeGraphLoader}
 `;
 
 // 3. Verify markers exist exactly once

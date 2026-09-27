@@ -1,0 +1,3792 @@
+{
+  "schemaVersion": 1,
+  "spatialContractVersion": 1,
+  "coordinateFrameId": "frame:project:8dd2f1f885e05cb2:1",
+  "ruleSetVersion": "1.1.0",
+  "blocked": false,
+  "projectId": "",
+  "page": 1,
+  "spatialIndex": {
+    "type": "polyline-bounds-tree",
+    "containmentSegmentCount": 7,
+    "snapToleranceM": 0.05
+  },
+  "frame": {
+    "units": "m",
+    "axes": {
+      "x": "east",
+      "y": "north",
+      "z": "absolute elevation"
+    },
+    "calibration": {
+      "pixelsPerUnit": 20,
+      "drawingUnit": "m",
+      "unitToM": 1,
+      "baseX": 0,
+      "baseY": 0,
+      "basePointKnown": true,
+      "transformCoefficients": [
+        0.05,
+        0,
+        0,
+        0,
+        -0.05,
+        0
+      ]
+    },
+    "snapToleranceM": 0.05,
+    "pageList": [
+      1
+    ]
+  },
+  "sourceFingerprint": "fnv1a64:e9d19274394157dd",
+  "nodes": [
+    {
+      "id": "device:CAM-01-OUT",
+      "kind": "device",
+      "page": 1,
+      "x": 26,
+      "y": -9,
+      "z": 3.5,
+      "source": {
+        "collection": "takeoffs",
+        "id": "CAM-01-OUT",
+        "page": 1,
+        "fingerprint": "fnv1a64:6c49df6f173ced1b",
+        "record": {
+          "id": "CAM-01-OUT",
+          "materialId": "camera",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 180,
+              "z": 3.5
+            }
+          ],
+          "metadata": {
+            "tagName": "CAM-01-OUT",
+            "service": "CCTV / Data",
+            "cableEntryElevation": "EL +3.500",
+            "location": "Exterior facade"
+          }
+        }
+      },
+      "system": "CCTV / Data",
+      "label": "CAM-01-OUT",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:CAM-02-IN",
+      "kind": "device",
+      "page": 1,
+      "x": 12,
+      "y": -11,
+      "z": 3.2,
+      "source": {
+        "collection": "takeoffs",
+        "id": "CAM-02-IN",
+        "page": 1,
+        "fingerprint": "fnv1a64:7ab1c9e451cd06bc",
+        "record": {
+          "id": "CAM-02-IN",
+          "materialId": "camera",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 240,
+              "y": 220,
+              "z": 3.2
+            }
+          ],
+          "metadata": {
+            "tagName": "CAM-02-IN",
+            "service": "CCTV / Data",
+            "cableEntryElevation": "EL +3.200"
+          }
+        }
+      },
+      "system": "CCTV / Data",
+      "label": "CAM-02-IN",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:FIELD-SW-01",
+      "kind": "device",
+      "page": 1,
+      "x": 26,
+      "y": -11,
+      "z": 2.8,
+      "source": {
+        "collection": "takeoffs",
+        "id": "FIELD-SW-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:b0a7339496ec644f",
+        "record": {
+          "id": "FIELD-SW-01",
+          "materialId": "switch",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 220,
+              "z": 2.8
+            }
+          ],
+          "metadata": {
+            "tagName": "FIELD-SW-01",
+            "service": "Fibre",
+            "cableEntryElevation": "EL +2.800"
+          }
+        }
+      },
+      "system": "Fibre",
+      "label": "FIELD-SW-01",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:NET-SW-01",
+      "kind": "device",
+      "page": 1,
+      "x": 3,
+      "y": -11,
+      "z": 2.2,
+      "source": {
+        "collection": "takeoffs",
+        "id": "NET-SW-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:2e44e3d7496a567e",
+        "record": {
+          "id": "NET-SW-01",
+          "materialId": "switch",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220,
+              "z": 2.2
+            }
+          ],
+          "metadata": {
+            "tagName": "NET-SW-01",
+            "service": "Fibre",
+            "cableEntryElevation": "EL +2.200"
+          }
+        }
+      },
+      "system": "Fibre",
+      "label": "NET-SW-01",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:PAGA-PNL-A",
+      "kind": "device",
+      "page": 1,
+      "x": 2,
+      "y": -4,
+      "z": 2.2,
+      "source": {
+        "collection": "takeoffs",
+        "id": "PAGA-PNL-A",
+        "page": 1,
+        "fingerprint": "fnv1a64:266351bc0419e023",
+        "record": {
+          "id": "PAGA-PNL-A",
+          "materialId": "rack",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80,
+              "z": 2.2
+            }
+          ],
+          "metadata": {
+            "tagName": "PAGA-PNL-A",
+            "service": "PAGA A",
+            "cableEntryElevation": "EL +2.200"
+          }
+        }
+      },
+      "system": "PAGA A",
+      "label": "PAGA-PNL-A",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:PAGA-PNL-B",
+      "kind": "device",
+      "page": 1,
+      "x": 2,
+      "y": -7,
+      "z": 2.2,
+      "source": {
+        "collection": "takeoffs",
+        "id": "PAGA-PNL-B",
+        "page": 1,
+        "fingerprint": "fnv1a64:5df68ae16ebe5a27",
+        "record": {
+          "id": "PAGA-PNL-B",
+          "materialId": "rack",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 140,
+              "z": 2.2
+            }
+          ],
+          "metadata": {
+            "tagName": "PAGA-PNL-B",
+            "service": "PAGA B",
+            "cableEntryElevation": "EL +2.200"
+          }
+        }
+      },
+      "system": "PAGA B",
+      "label": "PAGA-PNL-B",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:SPK-A01",
+      "kind": "device",
+      "page": 1,
+      "x": 7,
+      "y": -4,
+      "z": 3.8,
+      "source": {
+        "collection": "takeoffs",
+        "id": "SPK-A01",
+        "page": 1,
+        "fingerprint": "fnv1a64:c9fab96d379ee8c8",
+        "record": {
+          "id": "SPK-A01",
+          "materialId": "sp-a",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 140,
+              "y": 80,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "SPK-A01",
+            "service": "PAGA A",
+            "cableEntryElevation": "EL +3.800"
+          }
+        }
+      },
+      "system": "PAGA A",
+      "label": "SPK-A01",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:SPK-A02",
+      "kind": "device",
+      "page": 1,
+      "x": 17,
+      "y": -4,
+      "z": 3.8,
+      "source": {
+        "collection": "takeoffs",
+        "id": "SPK-A02",
+        "page": 1,
+        "fingerprint": "fnv1a64:2411f4ea9e4ba1d0",
+        "record": {
+          "id": "SPK-A02",
+          "materialId": "sp-a",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 340,
+              "y": 80,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "SPK-A02",
+            "service": "PAGA A",
+            "cableEntryElevation": "EL +3.800"
+          }
+        }
+      },
+      "system": "PAGA A",
+      "label": "SPK-A02",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:SPK-A03-OUT",
+      "kind": "device",
+      "page": 1,
+      "x": 26,
+      "y": -4,
+      "z": 4,
+      "source": {
+        "collection": "takeoffs",
+        "id": "SPK-A03-OUT",
+        "page": 1,
+        "fingerprint": "fnv1a64:5a8af99e14728863",
+        "record": {
+          "id": "SPK-A03-OUT",
+          "materialId": "sp-a",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 80,
+              "z": 4
+            }
+          ],
+          "metadata": {
+            "tagName": "SPK-A03-OUT",
+            "service": "PAGA A",
+            "cableEntryElevation": "EL +4.000",
+            "location": "Exterior facade"
+          }
+        }
+      },
+      "system": "PAGA A",
+      "label": "SPK-A03-OUT",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:SPK-B01",
+      "kind": "device",
+      "page": 1,
+      "x": 7,
+      "y": -9,
+      "z": 3.8,
+      "source": {
+        "collection": "takeoffs",
+        "id": "SPK-B01",
+        "page": 1,
+        "fingerprint": "fnv1a64:98d2f99d69657df9",
+        "record": {
+          "id": "SPK-B01",
+          "materialId": "sp-b",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 140,
+              "y": 180,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "SPK-B01",
+            "service": "PAGA B",
+            "cableEntryElevation": "EL +3.800"
+          }
+        }
+      },
+      "system": "PAGA B",
+      "label": "SPK-B01",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "device:SPK-B02",
+      "kind": "device",
+      "page": 1,
+      "x": 17,
+      "y": -9,
+      "z": 3.8,
+      "source": {
+        "collection": "takeoffs",
+        "id": "SPK-B02",
+        "page": 1,
+        "fingerprint": "fnv1a64:6ea8cefacb4e19b1",
+        "record": {
+          "id": "SPK-B02",
+          "materialId": "sp-b",
+          "type": "point",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 340,
+              "y": 180,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "SPK-B02",
+            "service": "PAGA B",
+            "cableEntryElevation": "EL +3.800"
+          }
+        }
+      },
+      "system": "PAGA B",
+      "label": "SPK-B02",
+      "terminal": "",
+      "panelId": "",
+      "panelTerminal": false,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-junction:FO-TRAY:1",
+      "kind": "route-junction",
+      "page": 1,
+      "x": 24,
+      "y": -12.5,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+        "record": {
+          "id": "FO-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 60,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Fiber",
+          "containmentType": "Tray",
+          "containmentTag": "FO-TRAY"
+        }
+      },
+      "reviewed": false,
+      "segmentId": "FO-TRAY",
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-junction:TRAY-NORTH:1",
+      "kind": "route-junction",
+      "page": 1,
+      "x": 24,
+      "y": -3,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+        "record": {
+          "id": "TRAY-NORTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 60
+            },
+            {
+              "x": 480,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 60
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-NORTH"
+        }
+      },
+      "reviewed": false,
+      "segmentId": "TRAY-NORTH",
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-junction:TRAY-SOUTH:1",
+      "kind": "route-junction",
+      "page": 1,
+      "x": 24,
+      "y": -12,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-SOUTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:5e5edf945420ff15",
+        "record": {
+          "id": "TRAY-SOUTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 480,
+              "y": 240
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-SOUTH"
+        }
+      },
+      "reviewed": false,
+      "segmentId": "TRAY-SOUTH",
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-node:PEN-01",
+      "kind": "route-node",
+      "page": 1,
+      "x": 24,
+      "y": -3,
+      "z": 4.2,
+      "source": {
+        "collection": "routeNodes",
+        "id": "PEN-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:e6ceb1210a77f7ff",
+        "record": {
+          "id": "PEN-01",
+          "nodeType": "Penetration",
+          "page": 1,
+          "point": {
+            "x": 480,
+            "y": 60
+          },
+          "elevation": 4.2,
+          "approvalStatus": "APPROVED",
+          "zone": "Control building",
+          "routeClass": "Telecom"
+        }
+      },
+      "transitionKind": "penetration",
+      "approvalStatus": "APPROVED",
+      "label": "PEN-01",
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-node:PEN-02",
+      "kind": "route-node",
+      "page": 1,
+      "x": 24,
+      "y": -12,
+      "z": 4.2,
+      "source": {
+        "collection": "routeNodes",
+        "id": "PEN-02",
+        "page": 1,
+        "fingerprint": "fnv1a64:a5383ff1d7c55f7c",
+        "record": {
+          "id": "PEN-02",
+          "nodeType": "Penetration",
+          "page": 1,
+          "point": {
+            "x": 480,
+            "y": 240
+          },
+          "elevation": 4.2,
+          "approvalStatus": "APPROVED",
+          "zone": "Control building",
+          "routeClass": "Telecom"
+        }
+      },
+      "transitionKind": "penetration",
+      "approvalStatus": "APPROVED",
+      "label": "PEN-02",
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-node:PEN-FO-01",
+      "kind": "route-node",
+      "page": 1,
+      "x": 24,
+      "y": -12.5,
+      "z": 3,
+      "source": {
+        "collection": "routeNodes",
+        "id": "PEN-FO-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:c0379b8eacdfe9ba",
+        "record": {
+          "id": "PEN-FO-01",
+          "nodeType": "Penetration",
+          "page": 1,
+          "point": {
+            "x": 480,
+            "y": 250
+          },
+          "elevation": 3,
+          "approvalStatus": "APPROVED",
+          "zone": "Control building",
+          "routeClass": "Fiber"
+        }
+      },
+      "transitionKind": "penetration",
+      "approvalStatus": "APPROVED",
+      "label": "PEN-FO-01",
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:DATA-TRAY:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 12,
+      "y": -11,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "DATA-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:d261eb54751f44a2",
+        "record": {
+          "id": "DATA-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 240,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "DATA-TRAY"
+        }
+      },
+      "segmentId": "DATA-TRAY",
+      "vertexIndex": 1,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:DATA-TRAY:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 3,
+      "y": -11,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "DATA-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:d261eb54751f44a2",
+        "record": {
+          "id": "DATA-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 240,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "DATA-TRAY"
+        }
+      },
+      "segmentId": "DATA-TRAY",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:FACADE-DATA:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -9,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FACADE-DATA",
+        "page": 1,
+        "fingerprint": "fnv1a64:48bfb8c522bd1765",
+        "record": {
+          "id": "FACADE-DATA",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 220
+            },
+            {
+              "x": 520,
+              "y": 180
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "FACADE-DATA"
+        }
+      },
+      "segmentId": "FACADE-DATA",
+      "vertexIndex": 1,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:FACADE-DATA:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -11,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FACADE-DATA",
+        "page": 1,
+        "fingerprint": "fnv1a64:48bfb8c522bd1765",
+        "record": {
+          "id": "FACADE-DATA",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 220
+            },
+            {
+              "x": 520,
+              "y": 180
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "FACADE-DATA"
+        }
+      },
+      "segmentId": "FACADE-DATA",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:FACADE-EAST:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -12,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FACADE-EAST",
+        "page": 1,
+        "fingerprint": "fnv1a64:72e4d8c7e74ef068",
+        "record": {
+          "id": "FACADE-EAST",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "FACADE-EAST"
+        }
+      },
+      "segmentId": "FACADE-EAST",
+      "vertexIndex": 1,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:FACADE-EAST:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -3,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FACADE-EAST",
+        "page": 1,
+        "fingerprint": "fnv1a64:72e4d8c7e74ef068",
+        "record": {
+          "id": "FACADE-EAST",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "FACADE-EAST"
+        }
+      },
+      "segmentId": "FACADE-EAST",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:FO-TRAY:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -11,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+        "record": {
+          "id": "FO-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 60,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Fiber",
+          "containmentType": "Tray",
+          "containmentTag": "FO-TRAY"
+        }
+      },
+      "segmentId": "FO-TRAY",
+      "vertexIndex": 3,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:FO-TRAY:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 3,
+      "y": -11,
+      "z": 3,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+        "record": {
+          "id": "FO-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 60,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Fiber",
+          "containmentType": "Tray",
+          "containmentTag": "FO-TRAY"
+        }
+      },
+      "segmentId": "FO-TRAY",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:TRAY-B:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 2,
+      "y": -7,
+      "z": 4.5,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-B",
+        "page": 1,
+        "fingerprint": "fnv1a64:427f048bb09f5882",
+        "record": {
+          "id": "TRAY-B",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 140
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 140,
+              "y": 240
+            },
+            {
+              "x": 140,
+              "y": 180
+            },
+            {
+              "x": 440,
+              "y": 180
+            },
+            {
+              "x": 440,
+              "y": 140
+            },
+            {
+              "x": 40,
+              "y": 140
+            }
+          ],
+          "elevation": 4.5,
+          "elevationLabel": "EL +4.5",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-B"
+        }
+      },
+      "segmentId": "TRAY-B",
+      "vertexIndex": 6,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:TRAY-B:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 2,
+      "y": -7,
+      "z": 4.5,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-B",
+        "page": 1,
+        "fingerprint": "fnv1a64:427f048bb09f5882",
+        "record": {
+          "id": "TRAY-B",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 140
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 140,
+              "y": 240
+            },
+            {
+              "x": 140,
+              "y": 180
+            },
+            {
+              "x": 440,
+              "y": 180
+            },
+            {
+              "x": 440,
+              "y": 140
+            },
+            {
+              "x": 40,
+              "y": 140
+            }
+          ],
+          "elevation": 4.5,
+          "elevationLabel": "EL +4.5",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-B"
+        }
+      },
+      "segmentId": "TRAY-B",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:TRAY-NORTH:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -3,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+        "record": {
+          "id": "TRAY-NORTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 60
+            },
+            {
+              "x": 480,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 60
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-NORTH"
+        }
+      },
+      "segmentId": "TRAY-NORTH",
+      "vertexIndex": 5,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:TRAY-NORTH:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 2,
+      "y": -4,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+        "record": {
+          "id": "TRAY-NORTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 60
+            },
+            {
+              "x": 480,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 60
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-NORTH"
+        }
+      },
+      "segmentId": "TRAY-NORTH",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:TRAY-SOUTH:end",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 26,
+      "y": -12,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-SOUTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:5e5edf945420ff15",
+        "record": {
+          "id": "TRAY-SOUTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 480,
+              "y": 240
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-SOUTH"
+        }
+      },
+      "segmentId": "TRAY-SOUTH",
+      "vertexIndex": 3,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "route-point:TRAY-SOUTH:start",
+      "kind": "route-vertex",
+      "page": 1,
+      "x": 2,
+      "y": -4,
+      "z": 4.2,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-SOUTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:5e5edf945420ff15",
+        "record": {
+          "id": "TRAY-SOUTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 480,
+              "y": 240
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-SOUTH"
+        }
+      },
+      "segmentId": "TRAY-SOUTH",
+      "vertexIndex": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    }
+  ],
+  "edges": [
+    {
+      "id": "connect:route-junction:FO-TRAY:1|route-node:PEN-FO-01",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-node:PEN-FO-01",
+      "to": "route-junction:FO-TRAY:1",
+      "vertices": [
+        {
+          "x": 24,
+          "y": -12.5,
+          "z": 3
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "spatial-snap",
+        "id": "connect:route-junction:FO-TRAY:1|route-node:PEN-FO-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:a2e30821847d8309",
+        "records": [
+          {
+            "collection": "routeNodes",
+            "id": "PEN-FO-01",
+            "page": 1,
+            "fingerprint": "fnv1a64:c0379b8eacdfe9ba",
+            "record": {
+              "id": "PEN-FO-01",
+              "nodeType": "Penetration",
+              "page": 1,
+              "point": {
+                "x": 480,
+                "y": 250
+              },
+              "elevation": 3,
+              "approvalStatus": "APPROVED",
+              "zone": "Control building",
+              "routeClass": "Fiber"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "FO-TRAY",
+            "page": 1,
+            "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+            "record": {
+              "id": "FO-TRAY",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 60,
+                  "y": 220
+                },
+                {
+                  "x": 60,
+                  "y": 250
+                },
+                {
+                  "x": 520,
+                  "y": 250
+                },
+                {
+                  "x": 520,
+                  "y": 220
+                }
+              ],
+              "elevation": 3,
+              "elevationLabel": "EL +3",
+              "routeClass": "Fiber",
+              "containmentType": "Tray",
+              "containmentTag": "FO-TRAY"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "connect:route-junction:TRAY-NORTH:1|route-node:PEN-01",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-node:PEN-01",
+      "to": "route-junction:TRAY-NORTH:1",
+      "vertices": [
+        {
+          "x": 24,
+          "y": -3,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "spatial-snap",
+        "id": "connect:route-junction:TRAY-NORTH:1|route-node:PEN-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:55f3525919df8053",
+        "records": [
+          {
+            "collection": "routeNodes",
+            "id": "PEN-01",
+            "page": 1,
+            "fingerprint": "fnv1a64:e6ceb1210a77f7ff",
+            "record": {
+              "id": "PEN-01",
+              "nodeType": "Penetration",
+              "page": 1,
+              "point": {
+                "x": 480,
+                "y": 60
+              },
+              "elevation": 4.2,
+              "approvalStatus": "APPROVED",
+              "zone": "Control building",
+              "routeClass": "Telecom"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "TRAY-NORTH",
+            "page": 1,
+            "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+            "record": {
+              "id": "TRAY-NORTH",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 40,
+                  "y": 80
+                },
+                {
+                  "x": 40,
+                  "y": 40
+                },
+                {
+                  "x": 440,
+                  "y": 40
+                },
+                {
+                  "x": 440,
+                  "y": 60
+                },
+                {
+                  "x": 480,
+                  "y": 60
+                },
+                {
+                  "x": 520,
+                  "y": 60
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "TRAY-NORTH"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "connect:route-junction:TRAY-SOUTH:1|route-node:PEN-02",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-node:PEN-02",
+      "to": "route-junction:TRAY-SOUTH:1",
+      "vertices": [
+        {
+          "x": 24,
+          "y": -12,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "spatial-snap",
+        "id": "connect:route-junction:TRAY-SOUTH:1|route-node:PEN-02",
+        "page": 1,
+        "fingerprint": "fnv1a64:f3666d01da9f0cac",
+        "records": [
+          {
+            "collection": "routeNodes",
+            "id": "PEN-02",
+            "page": 1,
+            "fingerprint": "fnv1a64:a5383ff1d7c55f7c",
+            "record": {
+              "id": "PEN-02",
+              "nodeType": "Penetration",
+              "page": 1,
+              "point": {
+                "x": 480,
+                "y": 240
+              },
+              "elevation": 4.2,
+              "approvalStatus": "APPROVED",
+              "zone": "Control building",
+              "routeClass": "Telecom"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "TRAY-SOUTH",
+            "page": 1,
+            "fingerprint": "fnv1a64:5e5edf945420ff15",
+            "record": {
+              "id": "TRAY-SOUTH",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 40,
+                  "y": 80
+                },
+                {
+                  "x": 40,
+                  "y": 240
+                },
+                {
+                  "x": 480,
+                  "y": 240
+                },
+                {
+                  "x": 520,
+                  "y": 240
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "TRAY-SOUTH"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:DATA-TRAY:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:DATA-TRAY:start",
+      "to": "route-point:DATA-TRAY:end",
+      "vertices": [
+        {
+          "x": 3,
+          "y": -11,
+          "z": 3
+        },
+        {
+          "x": 12,
+          "y": -11,
+          "z": 3
+        }
+      ],
+      "lengthM": 9,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "DATA-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:d261eb54751f44a2",
+        "record": {
+          "id": "DATA-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 240,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "DATA-TRAY"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:FACADE-DATA:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:FACADE-DATA:start",
+      "to": "route-point:FACADE-DATA:end",
+      "vertices": [
+        {
+          "x": 26,
+          "y": -11,
+          "z": 3
+        },
+        {
+          "x": 26,
+          "y": -9,
+          "z": 3
+        }
+      ],
+      "lengthM": 2,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "FACADE-DATA",
+        "page": 1,
+        "fingerprint": "fnv1a64:48bfb8c522bd1765",
+        "record": {
+          "id": "FACADE-DATA",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 220
+            },
+            {
+              "x": 520,
+              "y": 180
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "FACADE-DATA"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:FACADE-EAST:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:FACADE-EAST:start",
+      "to": "route-point:FACADE-EAST:end",
+      "vertices": [
+        {
+          "x": 26,
+          "y": -3,
+          "z": 4.2
+        },
+        {
+          "x": 26,
+          "y": -12,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 9,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "FACADE-EAST",
+        "page": 1,
+        "fingerprint": "fnv1a64:72e4d8c7e74ef068",
+        "record": {
+          "id": "FACADE-EAST",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "FACADE-EAST"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:FO-TRAY:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:FO-TRAY:start",
+      "to": "route-junction:FO-TRAY:1",
+      "vertices": [
+        {
+          "x": 3,
+          "y": -11,
+          "z": 3
+        },
+        {
+          "x": 3,
+          "y": -12.5,
+          "z": 3
+        },
+        {
+          "x": 24,
+          "y": -12.5,
+          "z": 3
+        }
+      ],
+      "lengthM": 22.5,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+        "record": {
+          "id": "FO-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 60,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Fiber",
+          "containmentType": "Tray",
+          "containmentTag": "FO-TRAY"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [
+        {
+          "buildingId": "BLDG-01",
+          "transitionNodeId": "route-node:PEN-FO-01",
+          "approvalStatus": "APPROVED"
+        }
+      ],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:FO-TRAY:part-2",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-junction:FO-TRAY:1",
+      "to": "route-point:FO-TRAY:end",
+      "vertices": [
+        {
+          "x": 24,
+          "y": -12.5,
+          "z": 3
+        },
+        {
+          "x": 26,
+          "y": -12.5,
+          "z": 3
+        },
+        {
+          "x": 26,
+          "y": -11,
+          "z": 3
+        }
+      ],
+      "lengthM": 3.5,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+        "record": {
+          "id": "FO-TRAY",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220
+            },
+            {
+              "x": 60,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 250
+            },
+            {
+              "x": 520,
+              "y": 220
+            }
+          ],
+          "elevation": 3,
+          "elevationLabel": "EL +3",
+          "routeClass": "Fiber",
+          "containmentType": "Tray",
+          "containmentTag": "FO-TRAY"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [
+        {
+          "buildingId": "BLDG-01",
+          "transitionNodeId": "route-node:PEN-FO-01",
+          "approvalStatus": "APPROVED"
+        }
+      ],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:TRAY-B:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:TRAY-B:start",
+      "to": "route-point:TRAY-B:end",
+      "vertices": [
+        {
+          "x": 2,
+          "y": -7,
+          "z": 4.5
+        },
+        {
+          "x": 2,
+          "y": -12,
+          "z": 4.5
+        },
+        {
+          "x": 7,
+          "y": -12,
+          "z": 4.5
+        },
+        {
+          "x": 7,
+          "y": -9,
+          "z": 4.5
+        },
+        {
+          "x": 22,
+          "y": -9,
+          "z": 4.5
+        },
+        {
+          "x": 22,
+          "y": -7,
+          "z": 4.5
+        },
+        {
+          "x": 2,
+          "y": -7,
+          "z": 4.5
+        }
+      ],
+      "lengthM": 50,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-B",
+        "page": 1,
+        "fingerprint": "fnv1a64:427f048bb09f5882",
+        "record": {
+          "id": "TRAY-B",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 140
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 140,
+              "y": 240
+            },
+            {
+              "x": 140,
+              "y": 180
+            },
+            {
+              "x": 440,
+              "y": 180
+            },
+            {
+              "x": 440,
+              "y": 140
+            },
+            {
+              "x": 40,
+              "y": 140
+            }
+          ],
+          "elevation": 4.5,
+          "elevationLabel": "EL +4.5",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-B"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:TRAY-NORTH:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:TRAY-NORTH:start",
+      "to": "route-junction:TRAY-NORTH:1",
+      "vertices": [
+        {
+          "x": 2,
+          "y": -4,
+          "z": 4.2
+        },
+        {
+          "x": 2,
+          "y": -2,
+          "z": 4.2
+        },
+        {
+          "x": 22,
+          "y": -2,
+          "z": 4.2
+        },
+        {
+          "x": 22,
+          "y": -3,
+          "z": 4.2
+        },
+        {
+          "x": 24,
+          "y": -3,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 25,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+        "record": {
+          "id": "TRAY-NORTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 60
+            },
+            {
+              "x": 480,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 60
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-NORTH"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [
+        {
+          "buildingId": "BLDG-01",
+          "transitionNodeId": "route-node:PEN-01",
+          "approvalStatus": "APPROVED"
+        }
+      ],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:TRAY-NORTH:part-2",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-junction:TRAY-NORTH:1",
+      "to": "route-point:TRAY-NORTH:end",
+      "vertices": [
+        {
+          "x": 24,
+          "y": -3,
+          "z": 4.2
+        },
+        {
+          "x": 26,
+          "y": -3,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 2,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+        "record": {
+          "id": "TRAY-NORTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 40
+            },
+            {
+              "x": 440,
+              "y": 60
+            },
+            {
+              "x": 480,
+              "y": 60
+            },
+            {
+              "x": 520,
+              "y": 60
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-NORTH"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [
+        {
+          "buildingId": "BLDG-01",
+          "transitionNodeId": "route-node:PEN-01",
+          "approvalStatus": "APPROVED"
+        }
+      ],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:TRAY-SOUTH:part-1",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-point:TRAY-SOUTH:start",
+      "to": "route-junction:TRAY-SOUTH:1",
+      "vertices": [
+        {
+          "x": 2,
+          "y": -4,
+          "z": 4.2
+        },
+        {
+          "x": 2,
+          "y": -12,
+          "z": 4.2
+        },
+        {
+          "x": 24,
+          "y": -12,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 30,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-SOUTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:5e5edf945420ff15",
+        "record": {
+          "id": "TRAY-SOUTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 480,
+              "y": 240
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-SOUTH"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [
+        {
+          "buildingId": "BLDG-01",
+          "transitionNodeId": "route-node:PEN-02",
+          "approvalStatus": "APPROVED"
+        }
+      ],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "containment:TRAY-SOUTH:part-2",
+      "kind": "containment",
+      "page": 1,
+      "from": "route-junction:TRAY-SOUTH:1",
+      "to": "route-point:TRAY-SOUTH:end",
+      "vertices": [
+        {
+          "x": 24,
+          "y": -12,
+          "z": 4.2
+        },
+        {
+          "x": 26,
+          "y": -12,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 2,
+      "allowedSystems": null,
+      "routeType": "Tray",
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-SOUTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:5e5edf945420ff15",
+        "record": {
+          "id": "TRAY-SOUTH",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80
+            },
+            {
+              "x": 40,
+              "y": 240
+            },
+            {
+              "x": 480,
+              "y": 240
+            },
+            {
+              "x": 520,
+              "y": 240
+            }
+          ],
+          "elevation": 4.2,
+          "elevationLabel": "EL +4.2",
+          "routeClass": "Telecom",
+          "containmentType": "Tray",
+          "containmentTag": "TRAY-SOUTH"
+        }
+      },
+      "traversable": true,
+      "findings": [],
+      "boundaryCrossings": [
+        {
+          "buildingId": "BLDG-01",
+          "transitionNodeId": "route-node:PEN-02",
+          "approvalStatus": "APPROVED"
+        }
+      ],
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "snap:route-point:DATA-TRAY:start|route-point:FO-TRAY:start",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-point:FO-TRAY:start",
+      "to": "route-point:DATA-TRAY:start",
+      "vertices": [
+        {
+          "x": 3,
+          "y": -11,
+          "z": 3
+        },
+        {
+          "x": 3,
+          "y": -11,
+          "z": 3
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY|DATA-TRAY",
+        "page": 1,
+        "fingerprint": "fnv1a64:e46b06ab843b4ecc",
+        "records": [
+          {
+            "collection": "routeSegments",
+            "id": "FO-TRAY",
+            "page": 1,
+            "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+            "record": {
+              "id": "FO-TRAY",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 60,
+                  "y": 220
+                },
+                {
+                  "x": 60,
+                  "y": 250
+                },
+                {
+                  "x": 520,
+                  "y": 250
+                },
+                {
+                  "x": 520,
+                  "y": 220
+                }
+              ],
+              "elevation": 3,
+              "elevationLabel": "EL +3",
+              "routeClass": "Fiber",
+              "containmentType": "Tray",
+              "containmentTag": "FO-TRAY"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "DATA-TRAY",
+            "page": 1,
+            "fingerprint": "fnv1a64:d261eb54751f44a2",
+            "record": {
+              "id": "DATA-TRAY",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 60,
+                  "y": 220
+                },
+                {
+                  "x": 240,
+                  "y": 220
+                }
+              ],
+              "elevation": 3,
+              "elevationLabel": "EL +3",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "DATA-TRAY"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "snap:route-point:FACADE-DATA:start|route-point:FO-TRAY:end",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-point:FO-TRAY:end",
+      "to": "route-point:FACADE-DATA:start",
+      "vertices": [
+        {
+          "x": 26,
+          "y": -11,
+          "z": 3
+        },
+        {
+          "x": 26,
+          "y": -11,
+          "z": 3
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "routeSegments",
+        "id": "FO-TRAY|FACADE-DATA",
+        "page": 1,
+        "fingerprint": "fnv1a64:2672b88deba827d8",
+        "records": [
+          {
+            "collection": "routeSegments",
+            "id": "FO-TRAY",
+            "page": 1,
+            "fingerprint": "fnv1a64:cbf8b4ab1313899d",
+            "record": {
+              "id": "FO-TRAY",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 60,
+                  "y": 220
+                },
+                {
+                  "x": 60,
+                  "y": 250
+                },
+                {
+                  "x": 520,
+                  "y": 250
+                },
+                {
+                  "x": 520,
+                  "y": 220
+                }
+              ],
+              "elevation": 3,
+              "elevationLabel": "EL +3",
+              "routeClass": "Fiber",
+              "containmentType": "Tray",
+              "containmentTag": "FO-TRAY"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "FACADE-DATA",
+            "page": 1,
+            "fingerprint": "fnv1a64:48bfb8c522bd1765",
+            "record": {
+              "id": "FACADE-DATA",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 520,
+                  "y": 220
+                },
+                {
+                  "x": 520,
+                  "y": 180
+                }
+              ],
+              "elevation": 3,
+              "elevationLabel": "EL +3",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "FACADE-DATA"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "snap:route-point:FACADE-EAST:end|route-point:TRAY-SOUTH:end",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-point:TRAY-SOUTH:end",
+      "to": "route-point:FACADE-EAST:end",
+      "vertices": [
+        {
+          "x": 26,
+          "y": -12,
+          "z": 4.2
+        },
+        {
+          "x": 26,
+          "y": -12,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-SOUTH|FACADE-EAST",
+        "page": 1,
+        "fingerprint": "fnv1a64:946dc659bf8a17aa",
+        "records": [
+          {
+            "collection": "routeSegments",
+            "id": "TRAY-SOUTH",
+            "page": 1,
+            "fingerprint": "fnv1a64:5e5edf945420ff15",
+            "record": {
+              "id": "TRAY-SOUTH",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 40,
+                  "y": 80
+                },
+                {
+                  "x": 40,
+                  "y": 240
+                },
+                {
+                  "x": 480,
+                  "y": 240
+                },
+                {
+                  "x": 520,
+                  "y": 240
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "TRAY-SOUTH"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "FACADE-EAST",
+            "page": 1,
+            "fingerprint": "fnv1a64:72e4d8c7e74ef068",
+            "record": {
+              "id": "FACADE-EAST",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 520,
+                  "y": 60
+                },
+                {
+                  "x": 520,
+                  "y": 240
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "FACADE-EAST"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "snap:route-point:FACADE-EAST:start|route-point:TRAY-NORTH:end",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-point:TRAY-NORTH:end",
+      "to": "route-point:FACADE-EAST:start",
+      "vertices": [
+        {
+          "x": 26,
+          "y": -3,
+          "z": 4.2
+        },
+        {
+          "x": 26,
+          "y": -3,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH|FACADE-EAST",
+        "page": 1,
+        "fingerprint": "fnv1a64:e023119b1d81c6bf",
+        "records": [
+          {
+            "collection": "routeSegments",
+            "id": "TRAY-NORTH",
+            "page": 1,
+            "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+            "record": {
+              "id": "TRAY-NORTH",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 40,
+                  "y": 80
+                },
+                {
+                  "x": 40,
+                  "y": 40
+                },
+                {
+                  "x": 440,
+                  "y": 40
+                },
+                {
+                  "x": 440,
+                  "y": 60
+                },
+                {
+                  "x": 480,
+                  "y": 60
+                },
+                {
+                  "x": 520,
+                  "y": 60
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "TRAY-NORTH"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "FACADE-EAST",
+            "page": 1,
+            "fingerprint": "fnv1a64:72e4d8c7e74ef068",
+            "record": {
+              "id": "FACADE-EAST",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 520,
+                  "y": 60
+                },
+                {
+                  "x": 520,
+                  "y": 240
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "FACADE-EAST"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    },
+    {
+      "id": "snap:route-point:TRAY-NORTH:start|route-point:TRAY-SOUTH:start",
+      "kind": "connection",
+      "page": 1,
+      "from": "route-point:TRAY-NORTH:start",
+      "to": "route-point:TRAY-SOUTH:start",
+      "vertices": [
+        {
+          "x": 2,
+          "y": -4,
+          "z": 4.2
+        },
+        {
+          "x": 2,
+          "y": -4,
+          "z": 4.2
+        }
+      ],
+      "lengthM": 0,
+      "allowedSystems": null,
+      "source": {
+        "collection": "routeSegments",
+        "id": "TRAY-NORTH|TRAY-SOUTH",
+        "page": 1,
+        "fingerprint": "fnv1a64:942071941e094a50",
+        "records": [
+          {
+            "collection": "routeSegments",
+            "id": "TRAY-NORTH",
+            "page": 1,
+            "fingerprint": "fnv1a64:d9b3fce593cebc9b",
+            "record": {
+              "id": "TRAY-NORTH",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 40,
+                  "y": 80
+                },
+                {
+                  "x": 40,
+                  "y": 40
+                },
+                {
+                  "x": 440,
+                  "y": 40
+                },
+                {
+                  "x": 440,
+                  "y": 60
+                },
+                {
+                  "x": 480,
+                  "y": 60
+                },
+                {
+                  "x": 520,
+                  "y": 60
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "TRAY-NORTH"
+            }
+          },
+          {
+            "collection": "routeSegments",
+            "id": "TRAY-SOUTH",
+            "page": 1,
+            "fingerprint": "fnv1a64:5e5edf945420ff15",
+            "record": {
+              "id": "TRAY-SOUTH",
+              "page": 1,
+              "zone": "Control building",
+              "points": [
+                {
+                  "x": 40,
+                  "y": 80
+                },
+                {
+                  "x": 40,
+                  "y": 240
+                },
+                {
+                  "x": 480,
+                  "y": 240
+                },
+                {
+                  "x": 520,
+                  "y": 240
+                }
+              ],
+              "elevation": 4.2,
+              "elevationLabel": "EL +4.2",
+              "routeClass": "Telecom",
+              "containmentType": "Tray",
+              "containmentTag": "TRAY-SOUTH"
+            }
+          }
+        ]
+      },
+      "traversable": true,
+      "findings": [],
+      "snapDistanceM": 0,
+      "fingerprint": "fnv1a64:e9d19274394157dd"
+    }
+  ],
+  "buildings": [
+    {
+      "id": "BLDG-01",
+      "page": 1,
+      "points": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 24,
+          "y": 0
+        },
+        {
+          "x": 24,
+          "y": -14
+        },
+        {
+          "x": 0,
+          "y": -14
+        },
+        {
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "baseElevationM": 0,
+      "topElevationM": 6,
+      "source": {
+        "collection": "wbsZones",
+        "id": "BLDG-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:0f0d9926e0e9f88a",
+        "record": {
+          "id": "BLDG-01",
+          "name": "Control building",
+          "boundaryType": "building-envelope",
+          "page": 1,
+          "baseElevation": 0,
+          "topElevation": 6,
+          "points": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "x": 480,
+              "y": 0
+            },
+            {
+              "x": 480,
+              "y": 280
+            },
+            {
+              "x": 0,
+              "y": 280
+            },
+            {
+              "x": 0,
+              "y": 0
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "circuits": [
+    {
+      "id": "A-01 / outbound",
+      "page": 1,
+      "system": "PAGA A",
+      "sourceId": "PAGA-PNL-A",
+      "destinationId": "SPK-A01",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "TRAY-NORTH"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "A-01 / outbound",
+        "page": 1,
+        "fingerprint": "fnv1a64:38034f4b1cf7ae48",
+        "record": {
+          "id": "A-01 / outbound",
+          "type": "path",
+          "materialId": "cab-a",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 80,
+              "z": 2.2
+            },
+            {
+              "x": 40,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 40,
+              "y": 40,
+              "z": 4.2
+            },
+            {
+              "x": 140,
+              "y": 40,
+              "z": 4.2
+            },
+            {
+              "x": 140,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 140,
+              "y": 80,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "A-01 / outbound",
+            "service": "PAGA A",
+            "linkedFromId": "PAGA-PNL-A",
+            "linkedToId": "SPK-A01",
+            "fromTag": "PAGA-PNL-A",
+            "toTag": "SPK-A01",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "TRAY-NORTH"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "A-02",
+      "page": 1,
+      "system": "PAGA A",
+      "sourceId": "SPK-A01",
+      "destinationId": "SPK-A02",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "TRAY-NORTH"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "A-02",
+        "page": 1,
+        "fingerprint": "fnv1a64:3c2cb419513d216e",
+        "record": {
+          "id": "A-02",
+          "type": "path",
+          "materialId": "cab-a",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 140,
+              "y": 80,
+              "z": 3.8
+            },
+            {
+              "x": 140,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 140,
+              "y": 40,
+              "z": 4.2
+            },
+            {
+              "x": 340,
+              "y": 40,
+              "z": 4.2
+            },
+            {
+              "x": 340,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 340,
+              "y": 80,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "A-02",
+            "service": "PAGA A",
+            "linkedFromId": "SPK-A01",
+            "linkedToId": "SPK-A02",
+            "fromTag": "SPK-A01",
+            "toTag": "SPK-A02",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "TRAY-NORTH"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "A-03 / approved exit",
+      "page": 1,
+      "system": "PAGA A",
+      "sourceId": "SPK-A02",
+      "destinationId": "SPK-A03-OUT",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "TRAY-NORTH",
+        "FACADE-EAST"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "A-03 / approved exit",
+        "page": 1,
+        "fingerprint": "fnv1a64:835f7a243968a508",
+        "record": {
+          "id": "A-03 / approved exit",
+          "type": "path",
+          "materialId": "cab-a",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 340,
+              "y": 80,
+              "z": 3.8
+            },
+            {
+              "x": 340,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 340,
+              "y": 40,
+              "z": 4.2
+            },
+            {
+              "x": 440,
+              "y": 40,
+              "z": 4.2
+            },
+            {
+              "x": 440,
+              "y": 60,
+              "z": 4.2
+            },
+            {
+              "x": 480,
+              "y": 60,
+              "z": 4.2
+            },
+            {
+              "x": 520,
+              "y": 60,
+              "z": 4.2
+            },
+            {
+              "x": 520,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 520,
+              "y": 80,
+              "z": 4
+            }
+          ],
+          "metadata": {
+            "tagName": "A-03 / approved exit",
+            "service": "PAGA A",
+            "linkedFromId": "SPK-A02",
+            "linkedToId": "SPK-A03-OUT",
+            "fromTag": "SPK-A02",
+            "toTag": "SPK-A03-OUT",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "TRAY-NORTH",
+              "FACADE-EAST"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "A-04 / diverse return",
+      "page": 1,
+      "system": "PAGA A",
+      "sourceId": "SPK-A03-OUT",
+      "destinationId": "PAGA-PNL-A",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "FACADE-EAST",
+        "TRAY-SOUTH"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "A-04 / diverse return",
+        "page": 1,
+        "fingerprint": "fnv1a64:3ce0a1365f016027",
+        "record": {
+          "id": "A-04 / diverse return",
+          "type": "path",
+          "materialId": "cab-a",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 80,
+              "z": 4
+            },
+            {
+              "x": 520,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 520,
+              "y": 240,
+              "z": 4.2
+            },
+            {
+              "x": 480,
+              "y": 240,
+              "z": 4.2
+            },
+            {
+              "x": 440,
+              "y": 240,
+              "z": 4.2
+            },
+            {
+              "x": 40,
+              "y": 240,
+              "z": 4.2
+            },
+            {
+              "x": 40,
+              "y": 80,
+              "z": 4.2
+            },
+            {
+              "x": 40,
+              "y": 80,
+              "z": 2.2
+            }
+          ],
+          "metadata": {
+            "tagName": "A-04 / diverse return",
+            "service": "PAGA A",
+            "linkedFromId": "SPK-A03-OUT",
+            "linkedToId": "PAGA-PNL-A",
+            "fromTag": "SPK-A03-OUT",
+            "toTag": "PAGA-PNL-A",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "FACADE-EAST",
+              "TRAY-SOUTH"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "B-01 / outbound",
+      "page": 1,
+      "system": "PAGA B",
+      "sourceId": "PAGA-PNL-B",
+      "destinationId": "SPK-B01",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "TRAY-B"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "B-01 / outbound",
+        "page": 1,
+        "fingerprint": "fnv1a64:15e3089fbedaf73b",
+        "record": {
+          "id": "B-01 / outbound",
+          "type": "path",
+          "materialId": "cab-b",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 40,
+              "y": 140,
+              "z": 2.2
+            },
+            {
+              "x": 40,
+              "y": 140,
+              "z": 4.5
+            },
+            {
+              "x": 40,
+              "y": 240,
+              "z": 4.5
+            },
+            {
+              "x": 140,
+              "y": 240,
+              "z": 4.5
+            },
+            {
+              "x": 140,
+              "y": 180,
+              "z": 4.5
+            },
+            {
+              "x": 140,
+              "y": 180,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "B-01 / outbound",
+            "service": "PAGA B",
+            "linkedFromId": "PAGA-PNL-B",
+            "linkedToId": "SPK-B01",
+            "fromTag": "PAGA-PNL-B",
+            "toTag": "SPK-B01",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "TRAY-B"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "B-02",
+      "page": 1,
+      "system": "PAGA B",
+      "sourceId": "SPK-B01",
+      "destinationId": "SPK-B02",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "TRAY-B"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "B-02",
+        "page": 1,
+        "fingerprint": "fnv1a64:626bfda55b64098d",
+        "record": {
+          "id": "B-02",
+          "type": "path",
+          "materialId": "cab-b",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 140,
+              "y": 180,
+              "z": 3.8
+            },
+            {
+              "x": 140,
+              "y": 180,
+              "z": 4.5
+            },
+            {
+              "x": 340,
+              "y": 180,
+              "z": 4.5
+            },
+            {
+              "x": 340,
+              "y": 180,
+              "z": 3.8
+            }
+          ],
+          "metadata": {
+            "tagName": "B-02",
+            "service": "PAGA B",
+            "linkedFromId": "SPK-B01",
+            "linkedToId": "SPK-B02",
+            "fromTag": "SPK-B01",
+            "toTag": "SPK-B02",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "TRAY-B"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "B-03 / return",
+      "page": 1,
+      "system": "PAGA B",
+      "sourceId": "SPK-B02",
+      "destinationId": "PAGA-PNL-B",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "TRAY-B"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "B-03 / return",
+        "page": 1,
+        "fingerprint": "fnv1a64:4b859b8ab7f58f6c",
+        "record": {
+          "id": "B-03 / return",
+          "type": "path",
+          "materialId": "cab-b",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 340,
+              "y": 180,
+              "z": 3.8
+            },
+            {
+              "x": 340,
+              "y": 180,
+              "z": 4.5
+            },
+            {
+              "x": 440,
+              "y": 180,
+              "z": 4.5
+            },
+            {
+              "x": 440,
+              "y": 140,
+              "z": 4.5
+            },
+            {
+              "x": 40,
+              "y": 140,
+              "z": 4.5
+            },
+            {
+              "x": 40,
+              "y": 140,
+              "z": 2.2
+            }
+          ],
+          "metadata": {
+            "tagName": "B-03 / return",
+            "service": "PAGA B",
+            "linkedFromId": "SPK-B02",
+            "linkedToId": "PAGA-PNL-B",
+            "fromTag": "SPK-B02",
+            "toTag": "PAGA-PNL-B",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "TRAY-B"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "DATA-01",
+      "page": 1,
+      "system": "CCTV / Data",
+      "sourceId": "FIELD-SW-01",
+      "destinationId": "CAM-01-OUT",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "FACADE-DATA"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "DATA-01",
+        "page": 1,
+        "fingerprint": "fnv1a64:3fee3391a3075706",
+        "record": {
+          "id": "DATA-01",
+          "type": "path",
+          "materialId": "cat",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 520,
+              "y": 220,
+              "z": 2.8
+            },
+            {
+              "x": 520,
+              "y": 220,
+              "z": 3
+            },
+            {
+              "x": 520,
+              "y": 180,
+              "z": 3
+            },
+            {
+              "x": 520,
+              "y": 180,
+              "z": 3.5
+            }
+          ],
+          "metadata": {
+            "tagName": "DATA-01",
+            "service": "CCTV / Data",
+            "linkedFromId": "FIELD-SW-01",
+            "linkedToId": "CAM-01-OUT",
+            "fromTag": "FIELD-SW-01",
+            "toTag": "CAM-01-OUT",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "FACADE-DATA"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "DATA-02",
+      "page": 1,
+      "system": "CCTV / Data",
+      "sourceId": "NET-SW-01",
+      "destinationId": "CAM-02-IN",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "DATA-TRAY"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "DATA-02",
+        "page": 1,
+        "fingerprint": "fnv1a64:2343e61b59561233",
+        "record": {
+          "id": "DATA-02",
+          "type": "path",
+          "materialId": "cat",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220,
+              "z": 2.2
+            },
+            {
+              "x": 60,
+              "y": 220,
+              "z": 3
+            },
+            {
+              "x": 240,
+              "y": 220,
+              "z": 3
+            },
+            {
+              "x": 240,
+              "y": 220,
+              "z": 3.2
+            }
+          ],
+          "metadata": {
+            "tagName": "DATA-02",
+            "service": "CCTV / Data",
+            "linkedFromId": "NET-SW-01",
+            "linkedToId": "CAM-02-IN",
+            "fromTag": "NET-SW-01",
+            "toTag": "CAM-02-IN",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "DATA-TRAY"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    },
+    {
+      "id": "FO-01 / star branch",
+      "page": 1,
+      "system": "Fibre",
+      "sourceId": "NET-SW-01",
+      "destinationId": "FIELD-SW-01",
+      "topology": "",
+      "orderedDeviceIds": [],
+      "assignedContainmentIds": [
+        "FO-TRAY"
+      ],
+      "source": {
+        "collection": "takeoffs",
+        "id": "FO-01 / star branch",
+        "page": 1,
+        "fingerprint": "fnv1a64:2726d4b7cf225003",
+        "record": {
+          "id": "FO-01 / star branch",
+          "type": "path",
+          "materialId": "fo",
+          "page": 1,
+          "zone": "Control building",
+          "points": [
+            {
+              "x": 60,
+              "y": 220,
+              "z": 2.2
+            },
+            {
+              "x": 60,
+              "y": 220,
+              "z": 3
+            },
+            {
+              "x": 60,
+              "y": 250,
+              "z": 3
+            },
+            {
+              "x": 480,
+              "y": 250,
+              "z": 3
+            },
+            {
+              "x": 520,
+              "y": 250,
+              "z": 3
+            },
+            {
+              "x": 520,
+              "y": 220,
+              "z": 3
+            },
+            {
+              "x": 520,
+              "y": 220,
+              "z": 2.8
+            }
+          ],
+          "metadata": {
+            "tagName": "FO-01 / star branch",
+            "service": "Fibre",
+            "linkedFromId": "NET-SW-01",
+            "linkedToId": "FIELD-SW-01",
+            "fromTag": "NET-SW-01",
+            "toTag": "FIELD-SW-01",
+            "manualRoute": true,
+            "routeSegmentIds": [
+              "FO-TRAY"
+            ],
+            "scheduleType": "Cable Schedule",
+            "routingMethod": "Illustrative manual route"
+          }
+        }
+      }
+    }
+  ],
+  "findings": [
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:CAM-01-OUT is near FACADE-DATA in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "CAM-01-OUT",
+        "FACADE-DATA"
+      ],
+      "measured": {
+        "candidateElevationM": 3.5
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:CAM-02-IN is near DATA-TRAY in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "CAM-02-IN",
+        "DATA-TRAY"
+      ],
+      "measured": {
+        "candidateElevationM": 3.2
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:NET-SW-01 is near DATA-TRAY in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "DATA-TRAY",
+        "NET-SW-01"
+      ],
+      "measured": {
+        "candidateElevationM": 2.2
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:FIELD-SW-01 is near FACADE-DATA in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "FACADE-DATA",
+        "FIELD-SW-01"
+      ],
+      "measured": {
+        "candidateElevationM": 2.8
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:FIELD-SW-01 is near FO-TRAY in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "FIELD-SW-01",
+        "FO-TRAY"
+      ],
+      "measured": {
+        "candidateElevationM": 2.8
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:NET-SW-01 is near FO-TRAY in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "FO-TRAY",
+        "NET-SW-01"
+      ],
+      "measured": {
+        "candidateElevationM": 2.2
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:PAGA-PNL-A is near TRAY-NORTH in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "PAGA-PNL-A",
+        "TRAY-NORTH"
+      ],
+      "measured": {
+        "candidateElevationM": 2.2
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:PAGA-PNL-A is near TRAY-SOUTH in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "PAGA-PNL-A",
+        "TRAY-SOUTH"
+      ],
+      "measured": {
+        "candidateElevationM": 2.2
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:PAGA-PNL-B is near TRAY-B in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "PAGA-PNL-B",
+        "TRAY-B"
+      ],
+      "measured": {
+        "candidateElevationM": 2.2
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_CONNECTION_ELEVATION_MISMATCH",
+      "severity": "REVIEW",
+      "message": "device:SPK-B01 is near TRAY-B in plan but at a different elevation; an explicit riser/drop is required.",
+      "affectedSourceIds": [
+        "SPK-B01",
+        "TRAY-B"
+      ],
+      "measured": {
+        "candidateElevationM": 3.8
+      },
+      "expected": "matching elevations or a reviewed transition",
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Connection elevation mismatch",
+      "ruleApplicability": "Spatial connection"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "DATA-TRAY has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "DATA-TRAY"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "FACADE-DATA has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "FACADE-DATA"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "FACADE-EAST has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "FACADE-EAST"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "FO-TRAY has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "FO-TRAY"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "TRAY-B has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "TRAY-B"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "TRAY-NORTH has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "TRAY-NORTH"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    },
+    {
+      "ruleId": "GRAPH_SYSTEM_ALLOWLIST_UNKNOWN",
+      "severity": "REVIEW",
+      "message": "TRAY-SOUTH has no explicit allowedSystems list. Route class is not treated as system approval.",
+      "affectedSourceIds": [
+        "TRAY-SOUTH"
+      ],
+      "ruleSetVersion": "1.1.0",
+      "ruleTitle": "Containment system is unknown",
+      "ruleApplicability": "Containment assignment"
+    }
+  ]
+}
